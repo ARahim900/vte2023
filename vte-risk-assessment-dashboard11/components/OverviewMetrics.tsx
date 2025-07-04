@@ -8,14 +8,14 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Cell
 
 
 const ProgressBarCard: React.FC<{ title: string; value: string; description: string; progress: number; color: string; icon: React.ReactNode }> = ({ title, value, description, progress, color, icon }) => (
-    <Card>
+    <Card className="p-4 sm:p-6">
         <div className="flex justify-between items-start">
-            <div>
-                <p className="text-sm font-semibold text-slate-600">{title}</p>
-                <p className="text-4xl font-bold text-slate-800 mt-1">{value}</p>
-                <p className="text-sm text-slate-500">{description}</p>
+            <div className="flex-1 min-w-0 mr-3">
+                <p className="text-xs sm:text-sm font-semibold text-slate-600">{title}</p>
+                <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 mt-1">{value}</p>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">{description}</p>
             </div>
-            <div className={`p-2 rounded-full bg-${color}-100 text-${color}-600`}>
+            <div className={`p-2 rounded-full bg-${color}-100 text-${color}-600 flex-shrink-0`}>
                 {icon}
             </div>
         </div>
@@ -27,12 +27,12 @@ const ProgressBarCard: React.FC<{ title: string; value: string; description: str
 
 const VteContributionChart: React.FC = () => (
     <Card>
-        <h3 className="text-lg font-bold text-slate-800">VTE Assessment Contribution by Health Center</h3>
-        <p className="text-sm text-slate-500 mb-6">Percentage of total 3,086 VTE assessments performed by each center</p>
-        <div className="space-y-4">
+        <h3 className="text-base sm:text-lg font-bold text-slate-800">VTE Assessment Contribution by Health Center</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">Percentage of total 3,086 VTE assessments performed by each center</p>
+        <div className="space-y-3 sm:space-y-4">
             {vteContributionData.map(item => (
                 <div key={item.name}>
-                    <div className="flex justify-between items-center mb-1 text-sm">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1 text-xs sm:text-sm">
                         <span className="font-semibold text-slate-700">{item.name}</span>
                         <span className="text-slate-500">{item.assessments.toLocaleString()} assessments ({item.percentage}%)</span>
                     </div>
@@ -42,7 +42,7 @@ const VteContributionChart: React.FC = () => (
                 </div>
             ))}
         </div>
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg text-center text-blue-800">
+        <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-blue-50 rounded-lg text-center text-blue-800 text-xs sm:text-sm">
             <p>Total VTE Assessments: <strong>3,086 (100%)</strong> • Largest Contributor: <strong>Sohar P.C.</strong> with 996 assessments (32.3%)</p>
         </div>
     </Card>
@@ -50,16 +50,23 @@ const VteContributionChart: React.FC = () => (
 
 const AssessmentCoverageChart: React.FC = () => (
     <Card>
-        <h3 className="text-lg font-bold text-slate-800">Assessment Coverage by Center</h3>
-        <p className="text-sm text-slate-500 mb-6">Percentage of pregnant women assessed at each center</p>
+        <h3 className="text-base sm:text-lg font-bold text-slate-800">Assessment Coverage by Center</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">Percentage of pregnant women assessed at each center</p>
         <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer>
-                <BarChart data={assessmentCoverageData} margin={{ top: 5, right: 20, left: 0, bottom: 50 }}>
+                <BarChart data={assessmentCoverageData} margin={{ top: 5, right: 10, left: -10, bottom: 60 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="name" angle={-45} textAnchor="end" height={60} interval={0} tick={{ fontSize: 12, fill: '#475569' }}/>
-                    <YAxis domain={[0, 110]} unit="%" tick={{ fontSize: 12, fill: '#475569' }} />
+                    <XAxis 
+                        dataKey="name" 
+                        angle={-45} 
+                        textAnchor="end" 
+                        height={60} 
+                        interval={0} 
+                        tick={{ fontSize: 10, fill: '#475569' }}
+                    />
+                    <YAxis domain={[0, 110]} unit="%" tick={{ fontSize: 10, fill: '#475569' }} />
                     <Tooltip formatter={(value: number) => `${value}%`} />
-                    <Bar dataKey="coverage" fill="#10B981" barSize={30} radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="coverage" fill="#10B981" barSize={20} radius={[4, 4, 0, 0]} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
@@ -69,43 +76,53 @@ const AssessmentCoverageChart: React.FC = () => (
 
 const PregnancyRegistrationChart: React.FC = () => (
     <Card>
-        <h3 className="text-lg font-bold text-slate-800">Pregnancy Registration by Trimester</h3>
-        <p className="text-sm text-slate-500 mb-6">Distribution of 2,139 total registrations</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <h3 className="text-base sm:text-lg font-bold text-slate-800">Pregnancy Registration by Trimester</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">Distribution of 2,139 total registrations</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center">
             <div style={{ width: '100%', height: 250 }}>
                 <ResponsiveContainer>
                     <PieChart>
-                        <Pie data={pregnancyTrimesterData} dataKey="women" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#8884d8" paddingAngle={5}>
+                        <Pie 
+                            data={pregnancyTrimesterData} 
+                            dataKey="women" 
+                            nameKey="name" 
+                            cx="50%" 
+                            cy="50%" 
+                            innerRadius={50} 
+                            outerRadius={70} 
+                            fill="#8884d8" 
+                            paddingAngle={5}
+                        >
                             {pregnancyTrimesterData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                         </Pie>
                         <Tooltip formatter={(value: number, _name: string, props) => `${value} women (${props.payload.percentage}%)`} />
-                        <text x="50%" y="45%" textAnchor="middle" dominantBaseline="central" className="text-3xl font-bold fill-slate-800">
+                        <text x="50%" y="45%" textAnchor="middle" dominantBaseline="central" className="text-2xl sm:text-3xl font-bold fill-slate-800">
                             2,139
                         </text>
-                        <text x="50%" y="58%" textAnchor="middle" dominantBaseline="central" className="text-sm fill-slate-500">
+                        <text x="50%" y="58%" textAnchor="middle" dominantBaseline="central" className="text-xs sm:text-sm fill-slate-500">
                             Total Registrations
                         </text>
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 {pregnancyTrimesterData.map(item => (
-                    <div key={item.name} className="p-4 rounded-lg" style={{backgroundColor: `${item.color}20`}}>
+                    <div key={item.name} className="p-3 sm:p-4 rounded-lg" style={{backgroundColor: `${item.color}20`}}>
                         <div className="flex items-center mb-1">
                             <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: item.color }}></span>
-                            <p className="text-sm font-semibold text-slate-700">{item.name}</p>
+                            <p className="text-xs sm:text-sm font-semibold text-slate-700">{item.name}</p>
                         </div>
-                        <p className="text-xl font-bold text-slate-800">{item.percentage}%</p>
+                        <p className="text-lg sm:text-xl font-bold text-slate-800">{item.percentage}%</p>
                         <p className="text-xs text-slate-500">{item.women.toLocaleString()} women</p>
                     </div>
                 ))}
             </div>
         </div>
-        <div className="mt-6 p-4 bg-pink-50 rounded-lg">
-            <h4 className="font-bold text-pink-800">Key Clinical Insights</h4>
-            <ul className="list-disc list-inside text-sm text-pink-700 mt-2">
+        <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-pink-50 rounded-lg">
+            <h4 className="font-bold text-pink-800 text-sm sm:text-base">Key Clinical Insights</h4>
+            <ul className="list-disc list-inside text-xs sm:text-sm text-pink-700 mt-2">
                 <li><strong>Excellent Early Booking:</strong> 92.4% of women register in their first trimester</li>
                 <li><strong>Minimal Late Registrations:</strong> Only 1.1% register in third trimester</li>
             </ul>
@@ -115,16 +132,23 @@ const PregnancyRegistrationChart: React.FC = () => (
 
 const RiskDistributionChart: React.FC = () => (
     <Card>
-        <h3 className="text-lg font-bold text-slate-800">VTE Risk Score Distribution by Health Center</h3>
-        <p className="text-sm text-slate-500 mb-6">Comparison of risk scores across centers</p>
+        <h3 className="text-base sm:text-lg font-bold text-slate-800">VTE Risk Score Distribution by Health Center</h3>
+        <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">Comparison of risk scores across centers</p>
         <div style={{ width: '100%', height: 350 }}>
             <ResponsiveContainer>
-                <BarChart data={riskScoreDistributionData} margin={{ top: 5, right: 20, left: 0, bottom: 50 }}>
+                <BarChart data={riskScoreDistributionData} margin={{ top: 5, right: 10, left: -10, bottom: 60 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="name" angle={-45} textAnchor="end" height={60} interval={0} tick={{ fontSize: 12, fill: '#475569' }} />
-                    <YAxis tick={{ fontSize: 12, fill: '#475569' }} />
+                    <XAxis 
+                        dataKey="name" 
+                        angle={-45} 
+                        textAnchor="end" 
+                        height={60} 
+                        interval={0} 
+                        tick={{ fontSize: 10, fill: '#475569' }} 
+                    />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
                     <Tooltip />
-                    <Legend wrapperStyle={{fontSize: "14px", paddingTop: "40px"}}/>
+                    <Legend wrapperStyle={{fontSize: "12px", paddingTop: "20px"}}/>
                     <Bar dataKey="score2" stackId="a" fill="#FBBF24" name="Score ≥2" />
                     <Bar dataKey="score3" stackId="a" fill="#EF4444" name="Score ≥3" />
                     <Bar dataKey="score4" radius={[4, 4, 0, 0]} stackId="a" fill="#7C3AED" name="Score ≥4" />
@@ -137,29 +161,29 @@ const RiskDistributionChart: React.FC = () => (
 const SoharPCSpotlight: React.FC = () => (
     <Card>
         <div className="flex items-center mb-4">
-            <TargetIcon className="w-8 h-8 text-brand-orange mr-3"/>
-            <h3 className="text-2xl font-bold text-slate-800">Sohar P.C. Performance Spotlight</h3>
+            <TargetIcon className="w-6 h-6 sm:w-8 sm:h-8 text-brand-orange mr-2 sm:mr-3"/>
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800">Sohar P.C. Performance Spotlight</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-50 p-4 rounded-lg">
-                <h4 className="font-bold text-slate-700 mb-2">Coverage & Scale</h4>
-                <ul className="list-disc list-inside space-y-1 text-sm text-slate-600">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-slate-50 p-3 sm:p-4 rounded-lg">
+                <h4 className="font-bold text-slate-700 mb-2 text-sm sm:text-base">Coverage & Scale</h4>
+                <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-600">
                     <li><strong>1,142</strong> total registrations (35% of all)</li>
                     <li><strong>996</strong> VTE assessments (87.2% rate)</li>
                     <li>Largest health center in analysis</li>
                 </ul>
             </div>
-            <div className="bg-red-50 p-4 rounded-lg">
-                <h4 className="font-bold text-red-700 mb-2">Risk Profile</h4>
-                 <ul className="list-disc list-inside space-y-1 text-sm text-red-600">
+            <div className="bg-red-50 p-3 sm:p-4 rounded-lg">
+                <h4 className="font-bold text-red-700 mb-2 text-sm sm:text-base">Risk Profile</h4>
+                 <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-red-600">
                     <li><strong>124</strong> high-risk patients (Score ≥3)</li>
                     <li><strong>28%</strong> have parity ≥3</li>
                     <li><strong>26%</strong> are age {'>'} 35 years</li>
                 </ul>
             </div>
-            <div className="bg-yellow-50 p-4 rounded-lg">
-                <h4 className="font-bold text-yellow-700 mb-2">Treatment Gap</h4>
-                <ul className="list-disc list-inside space-y-1 text-sm text-yellow-600">
+            <div className="bg-yellow-50 p-3 sm:p-4 rounded-lg">
+                <h4 className="font-bold text-yellow-700 mb-2 text-sm sm:text-base">Treatment Gap</h4>
+                <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-yellow-600">
                     <li><strong>108</strong> prescribed thromboprophylaxis</li>
                     <li><strong>16</strong> high-risk not treated (13%)</li>
                     <li>Room for improvement in follow-up</li>
@@ -171,26 +195,26 @@ const SoharPCSpotlight: React.FC = () => (
 
 
 const OverviewMetrics: React.FC = () => (
-    <div className="space-y-8">
-        <div className="p-6 bg-brand-blue-light rounded-xl flex items-start space-x-4">
-            <MapPinIcon className="w-10 h-10 text-brand-blue flex-shrink-0 mt-1"/>
+    <div className="space-y-6 sm:space-y-8">
+        <div className="p-4 sm:p-6 bg-brand-blue-light rounded-xl flex items-start space-x-3 sm:space-x-4">
+            <MapPinIcon className="w-8 h-8 sm:w-10 sm:h-10 text-brand-blue flex-shrink-0 mt-1"/>
             <div>
-                <h2 className="text-xl font-bold text-slate-800">Comprehensive Analysis: All 7 Health Centers</h2>
-                <p className="text-slate-600 mt-1">Complete VTE risk assessment data from Sohar P.C. and all regional health centers for 2023, covering 3,281 pregnancy registrations.</p>
+                <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">Comprehensive Analysis: All 7 Health Centers</h2>
+                <p className="text-xs sm:text-sm lg:text-base text-slate-600 mt-1">Complete VTE risk assessment data from Sohar P.C. and all regional health centers for 2023, covering 3,281 pregnancy registrations.</p>
             </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {overviewStats.map(stat => <StatCard key={stat.label} {...stat} />)}
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             <ProgressBarCard title="Assessment Coverage" value="94.1%" description="Excellent coverage across all registered pregnancies" progress={94.1} color="green" icon={<CheckCircleIcon className="w-6 h-6"/>} />
             <ProgressBarCard title="Treatment Rate" value="78.8%" description="High-risk patients receiving appropriate care" progress={78.8} color="blue" icon={<ShieldCheckIcon className="w-6 h-6"/>} />
             <ProgressBarCard title="Care Gap" value="79" description="High-risk patients requiring immediate follow-up" progress={21.2} color="orange" icon={<AlertTriangleIcon className="w-6 h-6"/>} />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <VteContributionChart />
             <AssessmentCoverageChart />
             <PregnancyRegistrationChart />
