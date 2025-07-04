@@ -3,7 +3,7 @@ import React from 'react';
 import Card from './shared/Card';
 import StatCard from './shared/StatCard';
 import { overviewStats, vteContributionData, assessmentCoverageData, pregnancyTrimesterData, riskScoreDistributionData } from '../constants/data';
-import { MapPinIcon, ShieldCheckIcon, AlertTriangleIcon, TrendingUpIcon, TargetIcon, CheckCircleIcon } from '../constants/icons';
+import { MapPinIcon, ShieldCheckIcon, AlertTriangleIcon, TargetIcon, CheckCircleIcon } from '../constants/icons';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Cell, PieChart, Pie, CartesianGrid } from 'recharts';
 
 
@@ -80,7 +80,7 @@ const PregnancyRegistrationChart: React.FC = () => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                         </Pie>
-                        <Tooltip formatter={(value: number, name: string, props) => `${value} women (${props.payload.percentage}%)`} />
+                        <Tooltip formatter={(value: number, _name: string, props) => `${value} women (${props.payload.percentage}%)`} />
                         <text x="50%" y="45%" textAnchor="middle" dominantBaseline="central" className="text-3xl font-bold fill-slate-800">
                             2,139
                         </text>
