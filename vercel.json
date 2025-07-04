@@ -1,0 +1,12 @@
+{
+  "buildCommand": "cd vte-risk-assessment-dashboard11 && npm install && npm run build",
+  "outputDirectory": "vte-risk-assessment-dashboard11/dist",
+  "installCommand": "cd vte-risk-assessment-dashboard11 && npm install",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
