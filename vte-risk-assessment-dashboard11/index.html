@@ -4,7 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>VTE Risk Assessment Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -38,8 +40,9 @@
 }
 </script>
 <link rel="stylesheet" href="/index.css">
+<link rel="stylesheet" href="/mobile.css">
 </head>
-  <body class="bg-slate-50">
+  <body class="bg-slate-50 overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
