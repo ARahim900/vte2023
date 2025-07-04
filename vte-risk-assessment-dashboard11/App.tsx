@@ -67,6 +67,9 @@ const Footer: React.FC = () => (
                     <span>•</span>
                     <span>WADI AHIN</span>
                 </div>
+                <div className="mt-4 pt-3 border-t border-slate-200">
+                    <p className="text-sm font-semibold text-slate-700">Analysis By: Dr. Wajud Al Shibli</p>
+                </div>
             </div>
         </div>
     </footer>

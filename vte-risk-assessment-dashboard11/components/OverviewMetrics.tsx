@@ -154,7 +154,7 @@ const SoharPCSpotlight: React.FC = () => (
                  <ul className="list-disc list-inside space-y-1 text-sm text-red-600">
                     <li><strong>124</strong> high-risk patients (Score ≥3)</li>
                     <li><strong>28%</strong> have parity ≥3</li>
-                    <li><strong>26%</strong> are age >35 years</li>
+                    <li><strong>26%</strong> are age {'>'} 35 years</li>
                 </ul>
             </div>
             <div className="bg-yellow-50 p-4 rounded-lg">
