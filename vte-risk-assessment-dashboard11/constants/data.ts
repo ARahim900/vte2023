@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { StatCardData, HealthCenterContribution, AssessmentCoverageData, TrimesterData, RiskScoreData, RiskFactorData, SimpleBarChartData, Insight } from '../types';
-import { UsersIcon, ChartBarIcon, AlertTriangleIcon, TargetIcon, MapPinIcon, DocumentReportIcon, CalendarIcon, CheckCircleIcon, ShieldCheckIcon, ExclamationCircleIcon, TrendingUpIcon, ArrowTrendingUpIcon, HeartIcon } from './icons';
+import { UsersIcon, ChartBarIcon, AlertTriangleIcon, TargetIcon, DocumentReportIcon, CalendarIcon, CheckCircleIcon, ShieldCheckIcon, ExclamationCircleIcon, TrendingUpIcon, ArrowTrendingUpIcon } from './icons';
 
 export const overviewStats: StatCardData[] = [
     {
