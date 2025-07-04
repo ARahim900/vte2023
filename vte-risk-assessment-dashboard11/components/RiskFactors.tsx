@@ -1,7 +1,6 @@
 
 import React from 'react';
 import Card from './shared/Card';
-import StatCard from './shared/StatCard';
 import { riskFactorsByType, preExistingRiskFactors, obstetricRiskFactors, transientRiskFactors, top5RiskFactors } from '../constants/data';
 import type { RiskFactorData } from '../types';
 import SimpleBarChart from './charts/SimpleBarChart';
