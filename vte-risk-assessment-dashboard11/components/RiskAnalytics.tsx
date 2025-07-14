@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Area, AreaChart, ComposedChart } from 'recharts';
+import React, { useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ComposedChart } from 'recharts';
+
+// Define interfaces for type safety
+interface RiskFactorData {
+  factor: string;
+  count: number;
+  percentage: number;
+  rank?: number | null;
+}
+
+interface HealthCenterData {
+  center: string;
+  totalPatients: number;
+  vteAssessed: number;
+  assessmentRate: number;
+}
 
 // Real data from the provided analysis (EXCLUDING SOHAR P.C. as per user request - not found in database)
-const healthCenterSummary = [
+const healthCenterSummary: HealthCenterData[] = [
   { center: 'AL MULTAQA', totalPatients: 1467, vteAssessed: 1467, assessmentRate: 100.0 },
   { center: 'AL UWAYNAT', totalPatients: 641, vteAssessed: 597, assessmentRate: 93.1 },
   { center: 'TAREEF', totalPatients: 784, vteAssessed: 758, assessmentRate: 96.7 },
@@ -12,7 +27,7 @@ const healthCenterSummary = [
 ];
 
 // Risk factors by center (EXCLUDING SOHAR P.C. - not found in database)
-const riskFactorsByCenter = {
+const riskFactorsByCenter: Record<string, RiskFactorData[]> = {
   'AL MULTAQA': [
     { factor: 'Parity ≥3', count: 473, percentage: 32.2 },
     { factor: 'Age > 35 years', count: 357, percentage: 24.3 },
@@ -72,7 +87,7 @@ const riskFactorsByCenter = {
   ],
 };
 
-const grandTotalRiskFactors = [
+const grandTotalRiskFactors: RiskFactorData[] = [
   { factor: 'Parity ≥3', count: 1386, percentage: 35.7, rank: 1 },
   { factor: 'Age > 35 years', count: 1021, percentage: 26.3, rank: 2 },
   { factor: 'Smoking', count: 274, percentage: 7.1, rank: 3 },
@@ -87,7 +102,7 @@ const grandTotalRiskFactors = [
 
 const obesityComparisonData = healthCenterSummary.map(center => {
   const centerData = riskFactorsByCenter[center.center];
-  const totalObesity = centerData?.find(f => f.factor === 'Total Obesity (BMI ≥30)');
+  const totalObesity = centerData?.find((f: RiskFactorData) => f.factor === 'Total Obesity (BMI ≥30)');
   return {
     center: center.center.replace('AL ', '').replace('WADI ', ''),
     obesity: totalObesity ? totalObesity.percentage : 0,
@@ -97,7 +112,7 @@ const obesityComparisonData = healthCenterSummary.map(center => {
 
 const smokingComparisonData = healthCenterSummary.map(center => {
   const centerData = riskFactorsByCenter[center.center];
-  const smoking = centerData?.find(f => f.factor === 'Smoking');
+  const smoking = centerData?.find((f: RiskFactorData) => f.factor === 'Smoking');
   return {
     center: center.center.replace('AL ', '').replace('WADI ', ''),
     smoking: smoking ? smoking.percentage : 0,
@@ -107,7 +122,7 @@ const smokingComparisonData = healthCenterSummary.map(center => {
 
 const parityComparisonData = healthCenterSummary.map(center => {
   const centerData = riskFactorsByCenter[center.center];
-  const parity = centerData?.find(f => f.factor === 'Parity ≥3');
+  const parity = centerData?.find((f: RiskFactorData) => f.factor === 'Parity ≥3');
   return {
     center: center.center.replace('AL ', '').replace('WADI ', ''),
     parity: parity ? parity.percentage : 0,
@@ -309,7 +324,7 @@ const RiskAnalytics: React.FC = () => {
                 <Tooltip />
                 <Legend />
                 <Bar yAxisId="left" dataKey="vteAssessed" fill="#0891b2" name="VTE Assessed" />
-                <Line yAxisId="right" type="monotone" dataKey="assessmentRate" stroke="#ef4444" strokeWidth={3} name="Assessment Rate %" />
+                <Bar yAxisId="right" type="monotone" dataKey="assessmentRate" stroke="#ef4444" strokeWidth={3} name="Assessment Rate %" />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -329,11 +344,11 @@ const RiskAnalytics: React.FC = () => {
                   fill="#8884d8"
                   dataKey="percentage"
                 >
-                  {getTopRiskFactors().map((entry, index) => (
+                  {getTopRiskFactors().map((_: RiskFactorData, index: number) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value, name) => [`${value}%`, name]} />
+                <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -358,7 +373,7 @@ const RiskAnalytics: React.FC = () => {
                   fontSize={10}
                 />
                 <YAxis />
-                <Tooltip formatter={(value, name) => [`${value}%`, 'Percentage']} />
+                <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
                 <Bar dataKey="percentage" fill="#0891b2" />
               </BarChart>
             </ResponsiveContainer>
@@ -378,7 +393,7 @@ const RiskAnalytics: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {getCurrentData().map((item, index) => (
+                  {getCurrentData().map((item: RiskFactorData, index: number) => (
                     <tr key={index} className="hover:bg-gray-50">
                       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.factor}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-right">{item.count?.toLocaleString()}</td>
