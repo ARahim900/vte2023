@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import OverviewMetrics from './components/OverviewMetrics';
 import RiskFactors from './components/RiskFactors';
 import InsightsAnalysis from './components/InsightsAnalysis';
+import RiskAnalytics from './components/RiskAnalytics';
 
-type Tab = 'overview' | 'risk' | 'insights';
+type Tab = 'overview' | 'risk' | 'insights' | 'analytics';
 
 const Header: React.FC = () => (
   <header className="text-center py-4 md:py-8 lg:py-12 px-4">
@@ -25,6 +26,7 @@ const TabNavigation: React.FC<{ activeTab: Tab; setActiveTab: (tab: Tab) => void
     { id: 'overview', label: 'Overview & Metrics', icon: '📊' },
     { id: 'risk', label: 'Risk Factors', icon: '⚠️' },
     { id: 'insights', label: 'Insights & Analysis', icon: '💡' },
+    { id: 'analytics', label: 'Risk Analytics', icon: '📈' },
   ];
 
   const handleTabClick = (tabId: Tab) => {
@@ -148,6 +150,7 @@ const App: React.FC = () => {
           {activeTab === 'overview' && <OverviewMetrics />}
           {activeTab === 'risk' && <RiskFactors />}
           {activeTab === 'insights' && <InsightsAnalysis />}
+          {activeTab === 'analytics' && <RiskAnalytics />}
         </div>
         <Footer />
       </main>
