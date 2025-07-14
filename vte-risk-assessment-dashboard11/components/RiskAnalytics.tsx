@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Area, AreaChart, ComposedChart } from 'recharts';
 
-// Real data from the provided analysis
+// Real data from the provided analysis (EXCLUDING SOHAR P.C. as per user request - not found in database)
 const healthCenterSummary = [
   { center: 'AL MULTAQA', totalPatients: 1467, vteAssessed: 1467, assessmentRate: 100.0 },
   { center: 'AL UWAYNAT', totalPatients: 641, vteAssessed: 597, assessmentRate: 93.1 },
@@ -11,6 +11,7 @@ const healthCenterSummary = [
   { center: 'WADI AHIN', totalPatients: 100, vteAssessed: 94, assessmentRate: 94.0 },
 ];
 
+// Risk factors by center (EXCLUDING SOHAR P.C. - not found in database)
 const riskFactorsByCenter = {
   'AL MULTAQA': [
     { factor: 'Parity ≥3', count: 473, percentage: 32.2 },
@@ -152,7 +153,9 @@ const RiskAnalytics: React.FC = () => {
   const [selectedCenter, setSelectedCenter] = useState<string>('ALL');
   const [selectedView, setSelectedView] = useState<string>('overview');
 
-  const centers = ['ALL', ...Object.keys(riskFactorsByCenter)];
+  // Filter out SOHAR P.C. - explicitly exclude it from filtration options (not found in database)
+  const availableCenters = Object.keys(riskFactorsByCenter).filter(center => center !== 'SOHAR P.C.');
+  const centers = ['ALL', ...availableCenters];
   const views = ['overview', 'risk-factors', 'comparison', 'insights'];
 
   const totalPatients = healthCenterSummary.reduce((sum, center) => sum + center.totalPatients, 0);
@@ -183,6 +186,9 @@ const RiskAnalytics: React.FC = () => {
           <span className="font-semibold mx-2">{totalAssessed.toLocaleString()}</span> VTE Assessed • 
           <span className="font-semibold mx-2">{overallAssessmentRate.toFixed(1)}%</span> Overall Assessment Rate
         </div>
+        <div className="mt-2 text-xs text-gray-500">
+          * SOHAR P.C. excluded - data not found in database
+        </div>
       </div>
 
       {/* View Selection */}
@@ -200,7 +206,7 @@ const RiskAnalytics: React.FC = () => {
         </div>
       </div>
 
-      {/* Health Center Filter */}
+      {/* Health Center Filter - SOHAR P.C. explicitly excluded */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Filter by Health Center</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -210,9 +216,12 @@ const RiskAnalytics: React.FC = () => {
               title={center === 'ALL' ? 'All Centers' : center.replace('AL ', '').replace('WADI ', '')}
               isActive={selectedCenter === center}
               onClick={() => setSelectedCenter(center)}
-              count={center === 'ALL' ? 6 : undefined}
+              count={center === 'ALL' ? availableCenters.length : undefined}
             />
           ))}
+        </div>
+        <div className="mt-3 text-xs text-gray-500">
+          📝 Note: SOHAR P.C. excluded from analysis - data not available in database
         </div>
       </div>
 
@@ -562,6 +571,22 @@ const RiskAnalytics: React.FC = () => {
                   <li>• Share best practices from AL MULTAQA</li>
                   <li>• Implement center-specific intervention programs</li>
                 </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Database Note */}
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+            <div className="flex items-start">
+              <svg className="w-5 h-5 text-yellow-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <h4 className="text-sm font-semibold text-yellow-800">Database vs Dashboard Note</h4>
+                <p className="text-sm text-yellow-700 mt-1">
+                  SOHAR P.C. data was not found in the database file, explaining discrepancies with the main dashboard. 
+                  This analysis focuses on the 6 centers with complete data availability.
+                </p>
               </div>
             </div>
           </div>
