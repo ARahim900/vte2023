@@ -6,8 +6,28 @@ import RiskAnalytics from './components/RiskAnalytics';
 import InsightsAnalysis from './components/InsightsAnalysis';
 import HealthCenterRF from './components/HealthCenterRF';
 
+// Type definitions
+interface NavigationItem {
+  id: string;
+  name: string;
+  emoji: string;
+  component: React.ComponentType;
+}
+
+interface MobileNavigationProps {
+  activeSection: string;
+  setActiveSection: (section: string) => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+interface DesktopNavigationProps {
+  activeSection: string;
+  setActiveSection: (section: string) => void;
+}
+
 // Navigation items configuration
-const navigationItems = [
+const navigationItems: NavigationItem[] = [
   { id: 'overview', name: 'Overview & Metrics', emoji: '📊', component: OverviewMetrics },
   { id: 'risk-factors', name: 'Risk Factors', emoji: '⚠️', component: RiskFactors },
   { id: 'health-center-rf', name: 'Health Center R.F.', emoji: '🏥', component: HealthCenterRF },
@@ -16,8 +36,13 @@ const navigationItems = [
 ];
 
 // Mobile Navigation Component
-const MobileNavigation = ({ activeSection, setActiveSection, isOpen, setIsOpen }) => {
+const MobileNavigation: React.FC<MobileNavigationProps> = ({ activeSection, setActiveSection, isOpen, setIsOpen }) => {
   const activeItem = navigationItems.find(item => item.id === activeSection);
+
+  // Handle case where activeItem might be undefined
+  if (!activeItem) {
+    return null;
+  }
 
   return (
     <div className="sm:hidden">
@@ -70,7 +95,7 @@ const MobileNavigation = ({ activeSection, setActiveSection, isOpen, setIsOpen }
 };
 
 // Desktop Navigation Component
-const DesktopNavigation = ({ activeSection, setActiveSection }) => (
+const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ activeSection, setActiveSection }) => (
   <div className="hidden sm:flex flex-wrap justify-center gap-2 lg:gap-4">
     {navigationItems.map((item) => (
       <button

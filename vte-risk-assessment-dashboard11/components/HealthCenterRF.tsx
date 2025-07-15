@@ -322,10 +322,6 @@ const HealthCenterRF: React.FC = () => {
         .sort((a, b) => b.percentage - a.percentage);
     
     const activeData = detailedRiskData[activeCenter];
-    
-    // Modern color palettes with gradients
-    const AGE_COLORS = ['#3B82F6', '#8B5CF6', '#EC4899']; // Blue to Purple to Pink
-    const WEIGHT_COLORS = ['#10B981', '#F59E0B', '#EF4444']; // Green to Amber to Red
 
     return (
         <div className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-inter transition-all duration-1000 ease-in-out ${isAnimated ? 'opacity-100' : 'opacity-0'}`}>
@@ -355,7 +351,7 @@ const HealthCenterRF: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {summaryData.map((item, index) => (
+                                {summaryData.map((item) => (
                                     <tr key={item.name} className={`border-b border-gray-100 transition-all duration-200 ease-in-out hover:bg-gradient-to-r hover:from-blue-25 hover:to-indigo-25 ${item.name === 'TOTAL' ? 'font-bold bg-gradient-to-r from-blue-100 to-indigo-100' : ''}`}>
                                         <td className="p-6 font-semibold text-gray-800">{item.name}</td>
                                         <td className="p-6 text-right font-mono text-gray-700">{item.total.toLocaleString()}</td>
@@ -424,7 +420,7 @@ const HealthCenterRF: React.FC = () => {
                                             label={({ value, total }: { value: number; total: number }) => `${((value / total) * 100).toFixed(1)}%`}
                                             labelLine={false}
                                         >
-                                            {activeData.ageDistribution.map((entry: DistributionItem, index: number) => (
+                                            {activeData.ageDistribution.map((_, index: number) => (
                                                 <Cell key={`cell-${index}`} fill={`url(#ageGradient${index + 1})`} />
                                             ))}
                                         </Pie>
@@ -465,7 +461,7 @@ const HealthCenterRF: React.FC = () => {
                                             label={({ value, total }: { value: number; total: number }) => `${((value / total) * 100).toFixed(1)}%`}
                                             labelLine={false}
                                         >
-                                            {activeData.weightDistribution.map((entry: DistributionItem, index: number) => (
+                                            {activeData.weightDistribution.map((_, index: number) => (
                                                 <Cell key={`cell-${index}`} fill={`url(#weightGradient${index + 1})`} />
                                             ))}
                                         </Pie>
