@@ -5,6 +5,7 @@ import RiskFactors from './components/RiskFactors';
 import RiskAnalytics from './components/RiskAnalytics';
 import InsightsAnalysis from './components/InsightsAnalysis';
 import HealthCenterRF from './components/HealthCenterRF';
+import Database from './components/Database';
 
 // Type definitions
 interface NavigationItem {
@@ -33,6 +34,7 @@ const navigationItems: NavigationItem[] = [
   { id: 'health-center-rf', name: 'Health Center R.F.', emoji: '🏥', component: HealthCenterRF },
   { id: 'risk-analytics', name: 'Risk Analytics', emoji: '📈', component: RiskAnalytics },
   { id: 'insights', name: 'Insights & Analysis', emoji: '💡', component: InsightsAnalysis },
+  { id: 'database', name: 'Database', emoji: '🗃️', component: Database },
 ];
 
 // Mobile Navigation Component
