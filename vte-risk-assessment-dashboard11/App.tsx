@@ -4,8 +4,8 @@ import OverviewMetrics from './components/OverviewMetrics';
 import RiskFactors from './components/RiskFactors';
 import RiskAnalytics from './components/RiskAnalytics';
 import InsightsAnalysis from './components/InsightsAnalysis';
-import HealthCenterRF from './components/HealthCenterRF';
 import Database from './components/Database';
+import RiskFactorAge from './components/RiskFactorAge';
 
 // Type definitions
 interface NavigationItem {
@@ -31,8 +31,8 @@ interface DesktopNavigationProps {
 const navigationItems: NavigationItem[] = [
   { id: 'overview', name: 'Overview & Metrics', emoji: '📊', component: OverviewMetrics },
   { id: 'risk-factors', name: 'Risk Factors', emoji: '⚠️', component: RiskFactors },
-  { id: 'health-center-rf', name: 'Health Center R.F.', emoji: '🏥', component: HealthCenterRF },
   { id: 'risk-analytics', name: 'Risk Analytics', emoji: '📈', component: RiskAnalytics },
+  { id: 'rf-age', name: 'R.F. Age', emoji: '👶', component: RiskFactorAge },
   { id: 'insights', name: 'Insights & Analysis', emoji: '💡', component: InsightsAnalysis },
   { id: 'database', name: 'Database', emoji: '🗃️', component: Database },
 ];
