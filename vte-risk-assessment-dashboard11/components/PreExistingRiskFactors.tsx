@@ -166,7 +166,6 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label })
     return null;
 };
 
-
 // --- Icon Components ---
 const AlertTriangle = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-500 mr-3 flex-shrink-0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>;
 const InfoIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 mr-3 flex-shrink-0"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>;
@@ -181,8 +180,8 @@ const getIcon = (type: KeyFinding['type']) => {
     }
 }
 
-// --- Main App Component ---
-export default function App() {
+// --- Main Component ---
+const PreExistingRiskFactors: React.FC = () => {
     const [activeCenter, setActiveCenter] = useState<string>('AL MULTAQA');
 
     const centerChartData = riskFactorsData[activeCenter]
@@ -193,10 +192,9 @@ export default function App() {
         .filter((d: GrandTotalItem) => !d.factor.includes('TOTAL'))
         .sort((a: GrandTotalItem, b: GrandTotalItem) => b.percentage - a.percentage);
 
-
     return (
         <div className="min-h-screen bg-gray-100 font-sans text-gray-700">
-            <main className="container mx-auto p-4 md:p-8">
+            <div className="container mx-auto p-4 md:p-8">
                 <header className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
                         Pre-existing Risk Factors Analysis
@@ -330,7 +328,9 @@ export default function App() {
                         </ul>
                     </Card>
                 </div>
-            </main>
+            </div>
         </div>
     );
-}
+};
+
+export default PreExistingRiskFactors; 
