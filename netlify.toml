@@ -1,11 +1,14 @@
+# Netlify Configuration for VTE Risk Assessment Dashboard
 [build]
   base = "vte-risk-assessment-dashboard11"
-  publish = "vte-risk-assessment-dashboard11/dist"
-  command = "npm ci && npm run build"
+  publish = "dist"
+  command = "npm ci && npm run build && echo 'Build completed successfully! Listing dist contents:' && ls -la dist/ && echo 'Current directory:' && pwd"
 
 [build.environment]
   NODE_VERSION = "18"
   NPM_VERSION = "9"
+  # Clear any existing cache
+  NPM_CONFIG_CACHE = "/tmp/.npm"
 
 [[redirects]]
   from = "/*"
@@ -41,5 +44,5 @@
   command = "npm run dev"
   targetPort = 5173
   port = 8888
-  publish = "vte-risk-assessment-dashboard11/dist"
+  publish = "dist"
   autoLaunch = true
