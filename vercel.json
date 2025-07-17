@@ -1,12 +1,57 @@
 {
-  "buildCommand": "cd vte-risk-assessment-dashboard11 && npm install && npm run build",
-  "outputDirectory": "vte-risk-assessment-dashboard11/dist",
-  "installCommand": "cd vte-risk-assessment-dashboard11 && npm install",
-  "framework": "vite",
-  "rewrites": [
+  "version": 2,
+  "builds": [
+    {
+      "src": "vte-risk-assessment-dashboard11/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/vte-risk-assessment-dashboard11/dist/index.html"
+    }
+  ],
+  "headers": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
-  ]
+  ],
+  "buildCommand": "cd vte-risk-assessment-dashboard11 && npm ci && npm run build",
+  "outputDirectory": "vte-risk-assessment-dashboard11/dist",
+  "installCommand": "cd vte-risk-assessment-dashboard11 && npm ci",
+  "framework": "vite"
 }
