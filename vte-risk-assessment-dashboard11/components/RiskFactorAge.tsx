@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart as ReChartsPieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Area, AreaChart } from 'recharts';
+import { BarChart, Bar, PieChart as ReChartsPieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area, AreaChart } from 'recharts';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent } from './shared/Card';
 import { 
-  UsersIcon, 
-  ChartBarIcon, 
-  AlertTriangleIcon, 
-  TargetIcon, 
-  CheckCircleIcon, 
-  ShieldCheckIcon, 
-  DocumentReportIcon, 
-  CalendarIcon,
   Users,
   Calendar,
   Shield,
@@ -20,10 +12,6 @@ import {
   Baby,
   UserCheck,
   UserPlus,
-  ChevronLeft,
-  ChevronRight,
-  Table,
-  Award,
   FileText
 } from '../constants/icons';
 
