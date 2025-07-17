@@ -8,12 +8,13 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist node_modules",
+    "clean": "if exist dist rmdir /s /q dist && if exist node_modules rmdir /s /q node_modules",
     "deploy": "npm run build && echo 'Ready for deployment!'",
     "pwa:generate-sw": "workbox generateSW workbox-config.js"
   },
   "dependencies": {
     "framer-motion": "^11.18.2",
+    "lucide-react": "^0.525.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-intersection-observer": "^9.16.0",

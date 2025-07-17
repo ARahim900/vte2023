@@ -1,0 +1,14 @@
+{
+  "name": "vte2023",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd vte-risk-assessment-dashboard11 & npm run dev",
+    "build": "cd vte-risk-assessment-dashboard11 & npm run build",
+    "preview": "cd vte-risk-assessment-dashboard11 & npm run preview",
+    "install-deps": "cd vte-risk-assessment-dashboard11 & npm install",
+    "type-check": "cd vte-risk-assessment-dashboard11 & npm run type-check"
+  },
+  "description": "VTE Risk Assessment Dashboard 2023",
+  "keywords": ["vte", "dashboard", "healthcare", "risk-assessment"]
+} 
