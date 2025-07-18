@@ -1,3 +1,3 @@
-import { RFAgePage } from '@/pages/RFAgePage';
+import RFAgePage from './RFAgePage';
 
 export default RFAgePage;
