@@ -43,8 +43,8 @@ const navigationItems: NavigationItem[] = [
   {
     name: 'R.F. Age',
     href: '/rf-age',
-    icon: Baby,
-    emoji: '👶',
+    icon: BarChart3,
+    emoji: '📊',
   },
   {
     name: 'Insights & Analysis',
