@@ -150,8 +150,22 @@ const RFAgePage: React.FC = () => {
   return (
     <div className="rf-age-page">
       <div className="page-header">
-        <h1>👶 R.F. Age</h1>
-        <p className="page-subtitle">Risk Factor Age Analysis - Track how long risks have been identified</p>
+        <div className="header-content">
+          <div className="title-section">
+            <h1>📊 R.F. Age</h1>
+            <p className="page-subtitle">Risk Factor Age Analysis - Track how long risks have been identified</p>
+          </div>
+          <div className="action-section">
+            <a 
+              href="https://vte2023.vercel.app" 
+              className="analytics-button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💡 Explore Full Analytics Suite
+            </a>
+          </div>
+        </div>
       </div>
 
       <div className="controls-section">
