@@ -19,7 +19,7 @@ const AppRouter: React.FC = () => {
             <li><Link to="/">📊 Overview & Metrics</Link></li>
             <li><Link to="/risk-factors">⚠️ Risk Factors</Link></li>
             <li><Link to="/risk-analytics">📈 Risk Analytics</Link></li>
-            <li><Link to="/rf-age">👶 R.F. Age</Link></li>
+            <li><Link to="/rf-age">📊 R.F. Age</Link></li>
             <li><Link to="/insights">💡 Insights & Analysis</Link></li>
             <li><Link to="/database">🗃️ Database</Link></li>
           </ul>
