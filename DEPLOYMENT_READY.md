@@ -49,4 +49,4 @@ Everything is set up and ready. Just visit your site and navigate to the R.F. Ag
 
 ---
 
-Last Updated: ${new Date().toISOString()}
+Last Updated: July 18, 2025
