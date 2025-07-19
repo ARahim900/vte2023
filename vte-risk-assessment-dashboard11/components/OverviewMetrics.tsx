@@ -49,7 +49,7 @@ const VteContributionChart: React.FC = () => (
             <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">Percentage of total 3,086 VTE assessments performed by each center</p>
         </AnimatedHeader>
         <AnimatedList>
-            <div className="space-y-3 sm:space-y-4">
+            <React.Fragment>
                 {vteContributionData.map((item, index) => (
                     <AnimatedListItem key={item.name} delay={index * 0.05}>
                         <div>
@@ -63,7 +63,7 @@ const VteContributionChart: React.FC = () => (
                         </div>
                     </AnimatedListItem>
                 ))}
-            </div>
+            </React.Fragment>
         </AnimatedList>
         <AnimatedWrapper
             delay={0.5}
@@ -149,7 +149,7 @@ const PregnancyRegistrationChart: React.FC = () => (
                     </ResponsiveContainer>
                 </div>
                 <AnimatedList>
-                    <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                    <React.Fragment>
                         {pregnancyTrimesterData.map((item, index) => (
                             <AnimatedListItem key={item.name} delay={index * 0.1}>
                                 <div className="p-3 sm:p-4 rounded-lg" style={{backgroundColor: `${item.color}20`}}>
@@ -162,7 +162,7 @@ const PregnancyRegistrationChart: React.FC = () => (
                                 </div>
                             </AnimatedListItem>
                         ))}
-                    </div>
+                    </React.Fragment>
                 </AnimatedList>
             </div>
             <AnimatedWrapper
@@ -229,7 +229,7 @@ const SoharPCSpotlight: React.FC = () => (
             </div>
         </AnimatedHeader>
         <AnimatedList>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            <React.Fragment>
                 <AnimatedListItem delay={0.1}>
                     <div className="bg-slate-50 p-3 sm:p-4 rounded-lg">
                         <h4 className="font-bold text-slate-700 mb-2 text-sm sm:text-base">Coverage & Scale</h4>
@@ -260,7 +260,7 @@ const SoharPCSpotlight: React.FC = () => (
                         </ul>
                     </div>
                 </AnimatedListItem>
-            </div>
+            </React.Fragment>
         </AnimatedList>
     </AnimatedCard>
 );
@@ -290,13 +290,13 @@ const OverviewMetrics: React.FC = () => (
         </AnimatedWrapper>
 
         <AnimatedList>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <React.Fragment>
                 {overviewStats.map((stat, index) => (
                     <AnimatedListItem key={stat.label} delay={index * 0.1}>
                         <StatCard {...stat} />
                     </AnimatedListItem>
                 ))}
-            </div>
+            </React.Fragment>
         </AnimatedList>
 
         <AnimatedWrapper

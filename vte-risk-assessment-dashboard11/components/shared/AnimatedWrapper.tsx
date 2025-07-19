@@ -53,7 +53,7 @@ export const AnimatedWrapper: React.FC<AnimatedWrapperProps> = ({
     }
   };
 
-  const MotionComponent = motion[as as keyof typeof motion] as any;
+  const MotionComponent = motion[as as keyof typeof motion] as React.ComponentType<any>;
 
   return (
     <MotionComponent
@@ -169,7 +169,7 @@ export const AnimatedChart: React.FC<AnimatedWrapperProps> = (props) => (
   />
 );
 
-export const AnimatedList: React.FC<AnimatedWrapperProps> = (props) => (
+export const AnimatedList: React.FC<AnimatedWrapperProps> = ({ children, ...props }) => (
   <AnimatedWrapper
     {...props}
     animation={{
@@ -182,10 +182,12 @@ export const AnimatedList: React.FC<AnimatedWrapperProps> = (props) => (
         }
       }
     }}
-  />
+  >
+    {children}
+  </AnimatedWrapper>
 );
 
-export const AnimatedListItem: React.FC<AnimatedWrapperProps> = (props) => (
+export const AnimatedListItem: React.FC<AnimatedWrapperProps> = ({ children, ...props }) => (
   <AnimatedWrapper
     {...props}
     animation={{
@@ -206,5 +208,7 @@ export const AnimatedListItem: React.FC<AnimatedWrapperProps> = (props) => (
         }
       }
     }}
-  />
+  >
+    {children}
+  </AnimatedWrapper>
 ); 

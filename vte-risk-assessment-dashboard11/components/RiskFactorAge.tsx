@@ -572,7 +572,7 @@ const VTEDashboard = () => {
             
             {/* Summary Stats */}
             <AnimatedList>
-              <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t">
+              <React.Fragment>
                 <AnimatedListItem delay={0.1}>
                   <div>
                     <p className="text-sm" style={{ color: colors.mediumText }}>Total Patients (2023)</p>
@@ -593,7 +593,7 @@ const VTEDashboard = () => {
                     <p className="text-2xl font-bold" style={{ color: colors.primary }}>27</p>
                   </div>
                 </AnimatedListItem>
-              </div>
+              </React.Fragment>
             </AnimatedList>
           </div>
         </AnimatedCard>
@@ -663,7 +663,7 @@ const VTEDashboard = () => {
                 </CardHeader>
                 <CardContent className="p-6">
                   <AnimatedList>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <React.Fragment>
                       {healthCenters.map((center, index) => (
                         <AnimatedListItem key={center} delay={index * 0.05}>
                           <InteractiveCard
@@ -701,7 +701,7 @@ const VTEDashboard = () => {
                           </InteractiveCard>
                         </AnimatedListItem>
                       ))}
-                    </div>
+                    </React.Fragment>
                   </AnimatedList>
                 </CardContent>
               </Card>
@@ -742,7 +742,7 @@ const VTEDashboard = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Age Distribution Cards */}
                         <AnimatedList>
-                          <div className="space-y-4">
+                          <React.Fragment>
                             {Object.entries(currentHealthCenterData.ageDistribution).map(([age, count], index) => {
                               const percentage = ((Number(count) / currentHealthCenterData.total) * 100).toFixed(1);
                               const color = age === 'Below 18' ? colors.ageGroup1 : 
@@ -771,78 +771,99 @@ const VTEDashboard = () => {
                                 </AnimatedListItem>
                               );
                             })}
-                          </div>
+                          </React.Fragment>
                         </AnimatedList>
 
                         {/* Chart */}
                         <AnimatedChart>
                           <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
-                              {chartView === 'bar' && (
-                                <BarChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
-                                  age: age.replace(' and above', '+'),
-                                  count: value,
-                                  color: age === 'Below 18' ? colors.ageGroup1 : 
-                                         age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
-                                }))}>
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis dataKey="age" />
-                                  <YAxis />
-                                  <Tooltip content={<CustomTooltip />} />
-                                  <Bar dataKey="count" fill={colors.primary} />
-                                </BarChart>
-                              )}
-                              {chartView === 'pie' && (
-                                <ReChartsPieChart>
-                                  <Pie
-                                    data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
-                                      name: age,
-                                      value,
+                              {(() => {
+                                if (chartView === 'bar') {
+                                  return (
+                                    <BarChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                      age: age.replace(' and above', '+'),
+                                      count: value,
                                       color: age === 'Below 18' ? colors.ageGroup1 : 
                                              age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
-                                    }))}
-                                    cx="50%"
-                                    cy="50%"
-                                    labelLine={false}
-                                    label={({ name, value, color }) => `${name}: ${value}%`}
-                                    outerRadius={80}
-                                    fill="#8884d8"
-                                    dataKey="value"
-                                  >
-                                    {Object.entries(currentHealthCenterData.ageDistribution).map(([age, value], index) => (
-                                      <Cell key={`cell-${index}`} fill={
-                                        age === 'Below 18' ? colors.ageGroup1 : 
-                                        age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
-                                      } />
-                                    ))}
-                                  </Pie>
-                                  <Tooltip content={<CustomTooltip />} />
-                                </ReChartsPieChart>
-                              )}
-                              {chartView === 'area' && (
-                                <AreaChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
-                                  age: age.replace(' and above', '+'),
-                                  value
-                                }))}>
-                                  <defs>
-                                    <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                                      <stop offset="5%" stopColor={colors.primary} stopOpacity={0.8}/>
-                                      <stop offset="95%" stopColor={colors.primary} stopOpacity={0.1}/>
-                                    </linearGradient>
-                                  </defs>
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis dataKey="age" />
-                                  <YAxis />
-                                  <Tooltip content={<CustomTooltip />} />
-                                  <Area 
-                                    type="monotone" 
-                                    dataKey="value" 
-                                    stroke={colors.primary} 
-                                    fillOpacity={1} 
-                                    fill="url(#colorGradient)"
-                                  />
-                                </AreaChart>
-                              )}
+                                    }))}>
+                                      <CartesianGrid strokeDasharray="3 3" />
+                                      <XAxis dataKey="age" />
+                                      <YAxis />
+                                      <Tooltip content={<CustomTooltip />} />
+                                      <Bar dataKey="count" fill={colors.primary} />
+                                    </BarChart>
+                                  );
+                                } else if (chartView === 'pie') {
+                                  return (
+                                    <ReChartsPieChart>
+                                      <Pie
+                                        data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                          name: age,
+                                          value,
+                                          color: age === 'Below 18' ? colors.ageGroup1 : 
+                                                 age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
+                                        }))}
+                                        cx="50%"
+                                        cy="50%"
+                                        labelLine={false}
+                                        label={({ name, value, color }) => `${name}: ${value}%`}
+                                        outerRadius={80}
+                                        fill="#8884d8"
+                                        dataKey="value"
+                                      >
+                                        {Object.entries(currentHealthCenterData.ageDistribution).map(([age, value], index) => (
+                                          <Cell key={`cell-${index}`} fill={
+                                            age === 'Below 18' ? colors.ageGroup1 : 
+                                            age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
+                                          } />
+                                        ))}
+                                      </Pie>
+                                      <Tooltip content={<CustomTooltip />} />
+                                    </ReChartsPieChart>
+                                  );
+                                } else if (chartView === 'area') {
+                                  return (
+                                    <AreaChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                      age: age.replace(' and above', '+'),
+                                      value
+                                    }))}>
+                                      <defs>
+                                        <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                                          <stop offset="5%" stopColor={colors.primary} stopOpacity={0.8}/>
+                                          <stop offset="95%" stopColor={colors.primary} stopOpacity={0.1}/>
+                                        </linearGradient>
+                                      </defs>
+                                      <CartesianGrid strokeDasharray="3 3" />
+                                      <XAxis dataKey="age" />
+                                      <YAxis />
+                                      <Tooltip content={<CustomTooltip />} />
+                                      <Area 
+                                        type="monotone" 
+                                        dataKey="value" 
+                                        stroke={colors.primary} 
+                                        fillOpacity={1} 
+                                        fill="url(#colorGradient)"
+                                      />
+                                    </AreaChart>
+                                  );
+                                }
+                                // Default to bar chart if no valid chart type
+                                return (
+                                  <BarChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                    age: age.replace(' and above', '+'),
+                                    count: value,
+                                    color: age === 'Below 18' ? colors.ageGroup1 : 
+                                           age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
+                                  }))}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="age" />
+                                    <YAxis />
+                                    <Tooltip content={<CustomTooltip />} />
+                                    <Bar dataKey="count" fill={colors.primary} />
+                                  </BarChart>
+                                );
+                              })()}
                             </ResponsiveContainer>
                           </div>
                         </AnimatedChart>

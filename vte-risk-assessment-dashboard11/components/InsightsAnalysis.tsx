@@ -126,7 +126,7 @@ const InsightsAnalysis: React.FC = () => {
                     <h3 className="text-2xl font-bold text-slate-800 mb-6">Sohar P.C. - Detailed Analysis & Recommendations</h3>
                 </AnimatedHeader>
                 <AnimatedList>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <React.Fragment>
                         <AnimatedListItem delay={0.1}>
                             <div className="p-6 bg-blue-50 rounded-lg">
                                 <h4 className="font-bold text-blue-800 mb-3">Service Scale</h4>
@@ -160,7 +160,7 @@ const InsightsAnalysis: React.FC = () => {
                                 </ul>
                             </div>
                         </AnimatedListItem>
-                    </div>
+                    </React.Fragment>
                 </AnimatedList>
             </AnimatedCard>
 
@@ -229,7 +229,7 @@ const InsightsAnalysis: React.FC = () => {
                         <h3 className="text-2xl font-bold text-center mb-6">2023 Program Achievements</h3>
                     </AnimatedHeader>
                     <AnimatedList>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <React.Fragment>
                             <AnimatedListItem delay={0.1}>
                                 <div className="bg-white/20 p-4 rounded-lg">
                                     <p className="text-4xl font-bold">3,281</p>
@@ -254,7 +254,7 @@ const InsightsAnalysis: React.FC = () => {
                                     <p className="mt-1 text-sm opacity-90">Treatment Initiation Rate</p>
                                 </div>
                             </AnimatedListItem>
-                        </div>
+                        </React.Fragment>
                     </AnimatedList>
                 </div>
             </AnimatedWrapper>

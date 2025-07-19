@@ -229,7 +229,7 @@ const RiskAnalytics: React.FC = () => {
         <div className="bg-white rounded-2xl p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Analysis View</h3>
           <AnimatedList>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <React.Fragment>
               {views.map((view, index) => (
                 <AnimatedListItem key={view} delay={index * 0.1}>
                   <FilterCard
@@ -239,7 +239,7 @@ const RiskAnalytics: React.FC = () => {
                   />
                 </AnimatedListItem>
               ))}
-            </div>
+            </React.Fragment>
           </AnimatedList>
         </div>
       </AnimatedCard>
@@ -249,7 +249,7 @@ const RiskAnalytics: React.FC = () => {
         <div className="bg-white rounded-2xl p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Filter by Health Center</h3>
           <AnimatedList>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+            <React.Fragment>
               {centers.map((center, index) => (
                 <AnimatedListItem key={center} delay={index * 0.05}>
                   <FilterCard
@@ -260,7 +260,7 @@ const RiskAnalytics: React.FC = () => {
                   />
                 </AnimatedListItem>
               ))}
-            </div>
+            </React.Fragment>
           </AnimatedList>
           <div className="mt-3 text-xs text-gray-500">
             📝 Note: SOHAR P.C. excluded from analysis - data not available in database
@@ -270,7 +270,7 @@ const RiskAnalytics: React.FC = () => {
 
       {/* Summary Statistics */}
       <AnimatedList>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <React.Fragment>
           <AnimatedListItem delay={0.1}>
             <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
               <div className="flex items-center justify-between">
@@ -338,7 +338,7 @@ const RiskAnalytics: React.FC = () => {
               </div>
             </div>
           </AnimatedListItem>
-        </div>
+        </React.Fragment>
       </AnimatedList>
 
       {/* Content based on selected view */}
