@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
+import { AnimatedWrapper, AnimatedCard, AnimatedHeader, AnimatedTable, AnimatedChart, AnimatedList, AnimatedListItem } from './shared/AnimatedWrapper';
 
 // --- Type Definitions ---
 interface RiskFactor {
@@ -144,13 +145,15 @@ const keyFindings: KeyFinding[] = [
 
 // --- Helper Components ---
 const Card: React.FC<CardProps> = ({ children, className = '' }) => (
-    <div className={`bg-white rounded-xl shadow-md overflow-hidden ${className}`}>
+    <AnimatedCard className={`bg-white rounded-xl shadow-md overflow-hidden ${className}`}>
         <div className="p-6 md:p-8">{children}</div>
-    </div>
+    </AnimatedCard>
 );
 
 const SectionTitle: React.FC<SectionTitleProps> = ({ children }) => (
-    <h3 className="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-indigo-500 pb-2">{children}</h3>
+    <AnimatedHeader>
+        <h3 className="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-indigo-500 pb-2">{children}</h3>
+    </AnimatedHeader>
 );
 
 const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
@@ -195,139 +198,215 @@ const PreExistingRiskFactors: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-100 font-sans text-gray-700">
             <div className="container mx-auto p-4 md:p-8">
-                <header className="text-center mb-12">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
-                        Pre-existing Risk Factors Analysis
-                    </h1>
-                    <p className="text-lg text-gray-500 mt-2">An Interactive Health Center Dashboard</p>
-                </header>
+                <AnimatedHeader>
+                    <header className="text-center mb-12">
+                        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                            Pre-existing Risk Factors Analysis
+                        </h1>
+                        <p className="text-lg text-gray-500 mt-2">An Interactive Health Center Dashboard</p>
+                    </header>
+                </AnimatedHeader>
 
                 {/* Summary Table */}
-                <Card className="mb-8">
+                <AnimatedCard className="mb-8">
                     <SectionTitle>📊 Summary Table - All Health Centers</SectionTitle>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left">
-                            <thead>
-                                <tr className="bg-gray-100 border-b-2 border-gray-200">
-                                    <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm">Health Center</th>
-                                    <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Total Patients</th>
-                                    <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">VTE Assessed</th>
-                                    <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Assessment Rate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {summaryData.map((item) => (
-                                    <tr key={item.name} className={`border-b border-gray-200 ${item.name === 'TOTAL' ? 'font-bold bg-gray-200' : 'hover:bg-gray-50'}`}>
-                                        <td className="p-4">{item.name}</td>
-                                        <td className="p-4 text-right">{item.total.toLocaleString()}</td>
-                                        <td className="p-4 text-right">{item.assessed.toLocaleString()}</td>
-                                        <td className="p-4 text-right">
-                                            <span className={`px-2 py-1 rounded-full text-sm font-medium ${item.rate > 95 ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                                                {item.rate.toFixed(1)}%
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </Card>
-
-                {/* Risk Factors by Center */}
-                <Card className="mb-8">
-                    <SectionTitle>📈 Pre-existing Risk Factors by Health Center</SectionTitle>
-                    <div className="mb-6">
-                        <div className="flex flex-wrap gap-2">
-                            {Object.keys(riskFactorsData).map(center => (
-                                <button
-                                    key={center}
-                                    onClick={() => setActiveCenter(center)}
-                                    className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${activeCenter === center ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200 border'}`}
-                                >
-                                    {center}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <AnimatedTable>
                         <div className="overflow-x-auto">
                             <table className="w-full text-left">
                                 <thead>
                                     <tr className="bg-gray-100 border-b-2 border-gray-200">
-                                        <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm">Risk Factor</th>
-                                        <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Count</th>
-                                        <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">%</th>
+                                        <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm">Health Center</th>
+                                        <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Total Patients</th>
+                                        <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">VTE Assessed</th>
+                                        <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Assessment Rate</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {riskFactorsData[activeCenter].map((risk: RiskFactor, index: number) => (
-                                        <tr key={index} className={`border-b border-gray-200 ${risk.factor.includes('Total') ? 'font-bold bg-gray-100' : 'hover:bg-gray-50'}`}>
-                                            <td className="p-3">{risk.factor}</td>
-                                            <td className="p-3 text-right">{risk.count.toLocaleString()}</td>
-                                            <td className="p-3 text-right">{risk.percentage.toFixed(1)}%</td>
-                                        </tr>
+                                    {summaryData.map((item, index) => (
+                                        <AnimatedWrapper
+                                            key={item.name}
+                                            delay={index * 0.05}
+                                            animation={{
+                                                hidden: { opacity: 0, y: 20 },
+                                                visible: {
+                                                    opacity: 1,
+                                                    y: 0,
+                                                    transition: { duration: 0.4, delay: index * 0.05 }
+                                                }
+                                            }}
+                                        >
+                                            <tr className={`border-b border-gray-200 ${item.name === 'TOTAL' ? 'font-bold bg-gray-200' : 'hover:bg-gray-50'}`}>
+                                                <td className="p-4">{item.name}</td>
+                                                <td className="p-4 text-right">{item.total.toLocaleString()}</td>
+                                                <td className="p-4 text-right">{item.assessed.toLocaleString()}</td>
+                                                <td className="p-4 text-right">
+                                                    <span className={`px-2 py-1 rounded-full text-sm font-medium ${item.rate > 95 ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                                                        {item.rate.toFixed(1)}%
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </AnimatedWrapper>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                        <div style={{height: `${Math.max(300, centerChartData.length * 40)}px`}}>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart layout="vertical" data={centerChartData} margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
-                                    <defs>
-                                        <linearGradient id="centerGradient" x1="0" y1="0" x2="1" y2="0">
-                                            <stop offset="0%" stopColor="#818cf8" />
-                                            <stop offset="100%" stopColor="#a78bfa" />
-                                        </linearGradient>
-                                    </defs>
-                                    <XAxis type="number" hide domain={[0, 'dataMax + 10']}/>
-                                    <YAxis type="category" dataKey="factor" width={100} tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
-                                    <Tooltip cursor={{ fill: 'rgba(238, 242, 255, 0.6)' }} content={<CustomTooltip />} />
-                                    <Bar dataKey="percentage" barSize={20} fill="url(#centerGradient)" radius={[0, 8, 8, 0]}>
-                                       <LabelList dataKey="percentage" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fill: '#4c51bf', fontSize: 12, fontWeight: 'bold' }} />
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer>
+                    </AnimatedTable>
+                </AnimatedCard>
+
+                {/* Risk Factors by Center */}
+                <AnimatedCard className="mb-8">
+                    <SectionTitle>📈 Pre-existing Risk Factors by Health Center</SectionTitle>
+                    <AnimatedWrapper
+                        delay={0.2}
+                        animation={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: {
+                                opacity: 1,
+                                y: 0,
+                                transition: { duration: 0.6, delay: 0.2 }
+                            }
+                        }}
+                    >
+                        <div className="mb-6">
+                            <div className="flex flex-wrap gap-2">
+                                {Object.keys(riskFactorsData).map((center, index) => (
+                                    <AnimatedWrapper
+                                        key={center}
+                                        delay={index * 0.1}
+                                        animation={{
+                                            hidden: { opacity: 0, scale: 0.8 },
+                                            visible: {
+                                                opacity: 1,
+                                                scale: 1,
+                                                transition: { duration: 0.4, delay: index * 0.1 }
+                                            }
+                                        }}
+                                    >
+                                        <button
+                                            onClick={() => setActiveCenter(center)}
+                                            className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${activeCenter === center ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200 border'}`}
+                                        >
+                                            {center}
+                                        </button>
+                                    </AnimatedWrapper>
+                                ))}
+                            </div>
                         </div>
+                    </AnimatedWrapper>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                        <AnimatedTable>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left">
+                                    <thead>
+                                        <tr className="bg-gray-100 border-b-2 border-gray-200">
+                                            <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm">Risk Factor</th>
+                                            <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Count</th>
+                                            <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">%</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {riskFactorsData[activeCenter].map((risk: RiskFactor, index: number) => (
+                                            <AnimatedWrapper
+                                                key={index}
+                                                delay={index * 0.05}
+                                                animation={{
+                                                    hidden: { opacity: 0, x: -20 },
+                                                    visible: {
+                                                        opacity: 1,
+                                                        x: 0,
+                                                        transition: { duration: 0.4, delay: index * 0.05 }
+                                                    }
+                                                }}
+                                            >
+                                                <tr className={`border-b border-gray-200 ${risk.factor.includes('Total') ? 'font-bold bg-gray-100' : 'hover:bg-gray-50'}`}>
+                                                    <td className="p-3">{risk.factor}</td>
+                                                    <td className="p-3 text-right">{risk.count.toLocaleString()}</td>
+                                                    <td className="p-3 text-right">{risk.percentage.toFixed(1)}%</td>
+                                                </tr>
+                                            </AnimatedWrapper>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </AnimatedTable>
+                        <AnimatedChart>
+                            <div style={{height: `${Math.max(300, centerChartData.length * 40)}px`}}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart layout="vertical" data={centerChartData} margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                                        <defs>
+                                            <linearGradient id="centerGradient" x1="0" y1="0" x2="1" y2="0">
+                                                <stop offset="0%" stopColor="#818cf8" />
+                                                <stop offset="100%" stopColor="#a78bfa" />
+                                            </linearGradient>
+                                        </defs>
+                                        <XAxis type="number" hide domain={[0, 'dataMax + 10']}/>
+                                        <YAxis type="category" dataKey="factor" width={100} tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
+                                        <Tooltip cursor={{ fill: 'rgba(238, 242, 255, 0.6)' }} content={<CustomTooltip />} />
+                                        <Bar dataKey="percentage" barSize={20} fill="url(#centerGradient)" radius={[0, 8, 8, 0]}>
+                                           <LabelList dataKey="percentage" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fill: '#4c51bf', fontSize: 12, fontWeight: 'bold' }} />
+                                        </Bar>
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </AnimatedChart>
                     </div>
-                </Card>
+                </AnimatedCard>
 
-                <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
-                    {/* Grand Total */}
-                    <Card className="xl:col-span-3">
-                        <SectionTitle>🎯 Grand Total - All Centers Combined</SectionTitle>
-                        <div className="h-96">
-                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={grandTotalChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                    <defs>
-                                        <linearGradient id="totalGradient" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stopColor="#4f46e5" />
-                                            <stop offset="100%" stopColor="#7c3aed" />
-                                        </linearGradient>
-                                    </defs>
-                                    <XAxis dataKey="factor" tick={{ fontSize: 10 }} interval={0} angle={-45} textAnchor="end" height={80} />
-                                    <YAxis />
-                                    <Tooltip cursor={{ fill: 'rgba(238, 242, 255, 0.6)' }} content={<CustomTooltip />} />
-                                    <Bar dataKey="percentage" fill="url(#totalGradient)" barSize={30} radius={[8, 8, 0, 0]}>
-                                        <LabelList dataKey="percentage" position="top" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fill: '#3730a3', fontSize: 12, fontWeight: 'bold' }} />
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </Card>
+                <AnimatedWrapper
+                    delay={0.3}
+                    animation={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: {
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.6, delay: 0.3 }
+                        }
+                    }}
+                >
+                    <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
+                        {/* Grand Total */}
+                        <AnimatedCard className="xl:col-span-3">
+                            <SectionTitle>🎯 Grand Total - All Centers Combined</SectionTitle>
+                            <AnimatedChart>
+                                <div className="h-96">
+                                     <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={grandTotalChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                            <defs>
+                                                <linearGradient id="totalGradient" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="#4f46e5" />
+                                                    <stop offset="100%" stopColor="#7c3aed" />
+                                                </linearGradient>
+                                            </defs>
+                                            <XAxis dataKey="factor" tick={{ fontSize: 10 }} interval={0} angle={-45} textAnchor="end" height={80} />
+                                            <YAxis />
+                                            <Tooltip cursor={{ fill: 'rgba(238, 242, 255, 0.6)' }} content={<CustomTooltip />} />
+                                            <Bar dataKey="percentage" fill="url(#totalGradient)" barSize={30} radius={[8, 8, 0, 0]}>
+                                                <LabelList dataKey="percentage" position="top" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fill: '#3730a3', fontSize: 12, fontWeight: 'bold' }} />
+                                            </Bar>
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </AnimatedChart>
+                        </AnimatedCard>
 
-                    {/* Key Findings */}
-                    <Card className="xl:col-span-2">
-                        <SectionTitle>⚠️ Key Findings</SectionTitle>
-                        <ul className="space-y-4">
-                            {keyFindings.map((finding: KeyFinding, index: number) => (
-                                <li key={index} className={`flex items-start ${finding.type === 'sub' ? 'pl-9 text-gray-600' : 'font-semibold'}`}>
-                                    {getIcon(finding.type)}
-                                    <span>{finding.text}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </Card>
-                </div>
+                        {/* Key Findings */}
+                        <AnimatedCard className="xl:col-span-2">
+                            <SectionTitle>⚠️ Key Findings</SectionTitle>
+                            <AnimatedList>
+                                <ul className="space-y-4">
+                                    {keyFindings.map((finding: KeyFinding, index: number) => (
+                                        <AnimatedListItem key={index} delay={index * 0.1}>
+                                            <li className={`flex items-start ${finding.type === 'sub' ? 'pl-9 text-gray-600' : 'font-semibold'}`}>
+                                                {getIcon(finding.type)}
+                                                <span>{finding.text}</span>
+                                            </li>
+                                        </AnimatedListItem>
+                                    ))}
+                                </ul>
+                            </AnimatedList>
+                        </AnimatedCard>
+                    </div>
+                </AnimatedWrapper>
             </div>
         </div>
     );

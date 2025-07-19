@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
+import { motion } from 'framer-motion';
+import { AnimatedWrapper, AnimatedCard, AnimatedHeader, AnimatedTable, AnimatedChart, AnimatedList, AnimatedListItem } from './shared/AnimatedWrapper';
 
 // --- Type Definitions ---
 interface RiskFactor {
@@ -144,13 +146,24 @@ const keyFindings: KeyFinding[] = [
 
 // --- Helper Components ---
 const Card: React.FC<CardProps> = ({ children, className = '' }) => (
-    <div className={`bg-white rounded-xl shadow-md overflow-hidden ${className}`}>
+    <AnimatedCard className={`bg-white rounded-xl shadow-md overflow-hidden card-hover ${className}`}>
         <div className="p-6 md:p-8">{children}</div>
-    </div>
+    </AnimatedCard>
 );
 
 const SectionTitle: React.FC<SectionTitleProps> = ({ children }) => (
-    <h3 className="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-indigo-500 pb-2">{children}</h3>
+    <AnimatedWrapper
+        animation={{
+            hidden: { opacity: 0, x: -20 },
+            visible: { 
+                opacity: 1, 
+                x: 0,
+                transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+            }
+        }}
+    >
+        <h3 className="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-indigo-500 pb-2">{children}</h3>
+    </AnimatedWrapper>
 );
 
 const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
@@ -197,29 +210,74 @@ export default function App() {
     return (
         <div className="min-h-screen bg-gray-100 font-sans text-gray-700">
             <main className="container mx-auto p-4 md:p-8">
-                <header className="text-center mb-12">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                <AnimatedHeader className="text-center mb-12">
+                    <motion.h1 
+                        className="text-4xl md:text-5xl font-extrabold text-gray-800 gradient-text"
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
                         Pre-existing Risk Factors Analysis
-                    </h1>
-                    <p className="text-lg text-gray-500 mt-2">An Interactive Health Center Dashboard</p>
-                </header>
+                    </motion.h1>
+                    <motion.p 
+                        className="text-lg text-gray-500 mt-2"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
+                        An Interactive Health Center Dashboard
+                    </motion.p>
+                </AnimatedHeader>
 
                 {/* Summary Table */}
                 <Card className="mb-8">
                     <SectionTitle>📊 Summary Table - All Health Centers</SectionTitle>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left">
+                    <AnimatedTable className="overflow-x-auto">
+                        <motion.table 
+                            className="w-full text-left"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: {
+                                        staggerChildren: 0.1,
+                                        delayChildren: 0.2
+                                    }
+                                }
+                            }}
+                        >
                             <thead>
-                                <tr className="bg-gray-100 border-b-2 border-gray-200">
+                                <motion.tr 
+                                    className="bg-gray-100 border-b-2 border-gray-200"
+                                    variants={{
+                                        hidden: { opacity: 0, y: -20 },
+                                        visible: { opacity: 1, y: 0 }
+                                    }}
+                                >
                                     <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm">Health Center</th>
                                     <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Total Patients</th>
                                     <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">VTE Assessed</th>
                                     <th className="p-4 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Assessment Rate</th>
-                                </tr>
+                                </motion.tr>
                             </thead>
                             <tbody>
-                                {summaryData.map((item) => (
-                                    <tr key={item.name} className={`border-b border-gray-200 ${item.name === 'TOTAL' ? 'font-bold bg-gray-200' : 'hover:bg-gray-50'}`}>
+                                {summaryData.map((item, index) => (
+                                    <motion.tr 
+                                        key={item.name} 
+                                        className={`border-b border-gray-200 ${item.name === 'TOTAL' ? 'font-bold bg-gray-200' : 'hover:bg-gray-50'}`}
+                                        variants={{
+                                            hidden: { opacity: 0, x: -20 },
+                                            visible: { 
+                                                opacity: 1, 
+                                                x: 0,
+                                                transition: { 
+                                                    duration: 0.5, 
+                                                    delay: index * 0.05,
+                                                    ease: [0.25, 0.46, 0.45, 0.94]
+                                                }
+                                            }
+                                        }}
+                                    >
                                         <td className="p-4">{item.name}</td>
                                         <td className="p-4 text-right">{item.total.toLocaleString()}</td>
                                         <td className="p-4 text-right">{item.assessed.toLocaleString()}</td>
@@ -228,51 +286,113 @@ export default function App() {
                                                 {item.rate.toFixed(1)}%
                                             </span>
                                         </td>
-                                    </tr>
+                                    </motion.tr>
                                 ))}
                             </tbody>
-                        </table>
-                    </div>
+                        </motion.table>
+                    </AnimatedTable>
                 </Card>
 
                 {/* Risk Factors by Center */}
                 <Card className="mb-8">
                     <SectionTitle>📈 Pre-existing Risk Factors by Health Center</SectionTitle>
-                    <div className="mb-6">
-                        <div className="flex flex-wrap gap-2">
-                            {Object.keys(riskFactorsData).map(center => (
-                                <button
+                    <AnimatedWrapper className="mb-6">
+                        <motion.div 
+                            className="flex flex-wrap gap-2"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: {
+                                        staggerChildren: 0.1,
+                                        delayChildren: 0.2
+                                    }
+                                }
+                            }}
+                        >
+                            {Object.keys(riskFactorsData).map((center, index) => (
+                                <motion.button
                                     key={center}
                                     onClick={() => setActiveCenter(center)}
                                     className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${activeCenter === center ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200 border'}`}
+                                    variants={{
+                                        hidden: { opacity: 0, scale: 0.8, y: 20 },
+                                        visible: { 
+                                            opacity: 1, 
+                                            scale: 1, 
+                                            y: 0,
+                                            transition: { 
+                                                duration: 0.5, 
+                                                delay: index * 0.1,
+                                                ease: [0.25, 0.46, 0.45, 0.94]
+                                            }
+                                        }
+                                    }}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     {center}
-                                </button>
+                                </motion.button>
                             ))}
-                        </div>
-                    </div>
+                        </motion.div>
+                    </AnimatedWrapper>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left">
+                        <AnimatedWrapper className="overflow-x-auto">
+                            <motion.table 
+                                className="w-full text-left"
+                                variants={{
+                                    hidden: { opacity: 0, x: -30 },
+                                    visible: { 
+                                        opacity: 1, 
+                                        x: 0,
+                                        transition: {
+                                            duration: 0.8,
+                                            ease: [0.25, 0.46, 0.45, 0.94],
+                                            staggerChildren: 0.05
+                                        }
+                                    }
+                                }}
+                            >
                                 <thead>
-                                    <tr className="bg-gray-100 border-b-2 border-gray-200">
+                                    <motion.tr 
+                                        className="bg-gray-100 border-b-2 border-gray-200"
+                                        variants={{
+                                            hidden: { opacity: 0, y: -20 },
+                                            visible: { opacity: 1, y: 0 }
+                                        }}
+                                    >
                                         <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm">Risk Factor</th>
                                         <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">Count</th>
                                         <th className="p-3 font-semibold text-gray-600 uppercase tracking-wider text-sm text-right">%</th>
-                                    </tr>
+                                    </motion.tr>
                                 </thead>
                                 <tbody>
                                     {riskFactorsData[activeCenter].map((risk: RiskFactor, index: number) => (
-                                        <tr key={index} className={`border-b border-gray-200 ${risk.factor.includes('Total') ? 'font-bold bg-gray-100' : 'hover:bg-gray-50'}`}>
+                                        <motion.tr 
+                                            key={index} 
+                                            className={`border-b border-gray-200 ${risk.factor.includes('Total') ? 'font-bold bg-gray-100' : 'hover:bg-gray-50'}`}
+                                            variants={{
+                                                hidden: { opacity: 0, x: -20 },
+                                                visible: { 
+                                                    opacity: 1, 
+                                                    x: 0,
+                                                    transition: { 
+                                                        duration: 0.5, 
+                                                        delay: index * 0.05,
+                                                        ease: [0.25, 0.46, 0.45, 0.94]
+                                                    }
+                                                }
+                                            }}
+                                        >
                                             <td className="p-3">{risk.factor}</td>
                                             <td className="p-3 text-right">{risk.count.toLocaleString()}</td>
                                             <td className="p-3 text-right">{risk.percentage.toFixed(1)}%</td>
-                                        </tr>
+                                        </motion.tr>
                                     ))}
                                 </tbody>
-                            </table>
-                        </div>
-                        <div style={{height: `${Math.max(300, centerChartData.length * 40)}px`}}>
+                            </motion.table>
+                        </AnimatedWrapper>
+                        <AnimatedChart style={{height: `${Math.max(300, centerChartData.length * 40)}px`}}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart layout="vertical" data={centerChartData} margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
                                     <defs>
@@ -289,7 +409,7 @@ export default function App() {
                                     </Bar>
                                 </BarChart>
                             </ResponsiveContainer>
-                        </div>
+                        </AnimatedChart>
                     </div>
                 </Card>
 
@@ -297,7 +417,7 @@ export default function App() {
                     {/* Grand Total */}
                     <Card className="xl:col-span-3">
                         <SectionTitle>🎯 Grand Total - All Centers Combined</SectionTitle>
-                        <div className="h-96">
+                        <AnimatedChart className="h-96">
                              <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={grandTotalChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                     <defs>
@@ -314,20 +434,24 @@ export default function App() {
                                     </Bar>
                                 </BarChart>
                             </ResponsiveContainer>
-                        </div>
+                        </AnimatedChart>
                     </Card>
 
                     {/* Key Findings */}
                     <Card className="xl:col-span-2">
                         <SectionTitle>⚠️ Key Findings</SectionTitle>
-                        <ul className="space-y-4">
+                        <AnimatedList className="space-y-4">
                             {keyFindings.map((finding: KeyFinding, index: number) => (
-                                <li key={index} className={`flex items-start ${finding.type === 'sub' ? 'pl-9 text-gray-600' : 'font-semibold'}`}>
+                                <AnimatedListItem 
+                                    key={index} 
+                                    className={`flex items-start ${finding.type === 'sub' ? 'pl-9 text-gray-600' : 'font-semibold'}`}
+                                    delay={index * 0.1}
+                                >
                                     {getIcon(finding.type)}
                                     <span>{finding.text}</span>
-                                </li>
+                                </AnimatedListItem>
                             ))}
-                        </ul>
+                        </AnimatedList>
                     </Card>
                 </div>
             </main>

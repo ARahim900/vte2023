@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, PieChart as ReChartsPieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area, AreaChart } from 'recharts';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent } from './shared/Card';
+import { AnimatedWrapper, AnimatedCard, AnimatedHeader, AnimatedChart, AnimatedList, AnimatedListItem } from './shared/AnimatedWrapper';
 import { 
   Users,
   Calendar,
@@ -473,10 +474,10 @@ const VTEDashboard = () => {
   const grandTotals = calculateGrandTotals();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="min-h-screen" style={{ backgroundColor: colors.lightBg }}>
       <style>{`
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
+          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
         
@@ -486,12 +487,12 @@ const VTEDashboard = () => {
         }
         
         @keyframes pulse {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.05); opacity: 0.8; }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
         }
         
         @keyframes float {
-          0%, 100% { transform: translateY(0); }
+          0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
         }
         
@@ -515,343 +516,367 @@ const VTEDashboard = () => {
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-8">
         {/* Data Year Notice */}
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-3 mb-4 animate-fadeIn">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5" style={{ color: colors.primary }} />
-            <p className="text-sm font-semibold" style={{ color: colors.primary }}>
-              Important: This dashboard displays data exclusively from the year 2023. 
-              No data from 2024 or any other year is included in this analysis.
-            </p>
-          </div>
-        </div>
-        
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-6 animate-fadeIn relative overflow-hidden border-t-4" style={{ borderTopColor: colors.primary }}>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br opacity-10 rounded-full blur-3xl animate-float" style={{ background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})` }}></div>
-          
-          {/* Ministry Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <Shield className="w-12 h-12" style={{ color: colors.primary }} />
-              <div>
-                <h2 className="text-lg font-semibold" style={{ color: colors.darkText }}>Ministry of Health</h2>
-                <p className="text-sm" style={{ color: colors.mediumText }}>Sultanate of Oman</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-sm font-bold" style={{ color: colors.primary }}>2023 DATA ONLY</p>
-              <p className="text-sm" style={{ color: colors.mediumText }}>Annual Report - Year 2023</p>
-              <p className="text-xs" style={{ color: colors.lightText }}>Suhar Wilayat</p>
-            </div>
-          </div>
-          
-          <h1 className="text-3xl font-bold mb-2" style={{ color: colors.primary }}>
-            VTE Risk Assessment Analysis - Year 2023
-          </h1>
-          <p className="text-lg" style={{ color: colors.mediumText }}>
-            Comprehensive Age Distribution and Risk Factor Analysis by Health Center
-          </p>
-          <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: colors.primary + '20' }}>
-            <Calendar className="w-4 h-4" style={{ color: colors.primary }} />
-            <span className="text-sm font-semibold" style={{ color: colors.primary }}>
-              Data Period: January 1, 2023 - December 31, 2023
-            </span>
-          </div>
-          
-          {/* Summary Stats */}
-          <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t">
-            <div>
-              <p className="text-sm" style={{ color: colors.mediumText }}>Total Patients (2023)</p>
-              <p className="text-2xl font-bold" style={{ color: colors.primary }}>
-                <AnimatedNumber value={grandTotals.totalPatients} />
+        <AnimatedWrapper
+          animation={{
+            hidden: { opacity: 0, y: -20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+            }
+          }}
+        >
+          <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-3 mb-4 animate-fadeIn">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-5 h-5" style={{ color: colors.primary }} />
+              <p className="text-sm font-semibold" style={{ color: colors.primary }}>
+                Important: This dashboard displays data exclusively from the year 2023. 
+                No data from 2024 or any other year is included in this analysis.
               </p>
             </div>
-            <div>
-              <p className="text-sm" style={{ color: colors.mediumText }}>Health Centers</p>
-              <p className="text-2xl font-bold" style={{ color: colors.primary }}>6</p>
-            </div>
-            <div>
-              <p className="text-sm" style={{ color: colors.mediumText }}>Risk Factors Assessed</p>
-              <p className="text-2xl font-bold" style={{ color: colors.primary }}>27</p>
-            </div>
           </div>
-        </div>
+        </AnimatedWrapper>
+        
+        <AnimatedCard>
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-6 animate-fadeIn relative overflow-hidden border-t-4" style={{ borderTopColor: colors.primary }}>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br opacity-10 rounded-full blur-3xl animate-float" style={{ background: `linear-gradient(to bottom right, ${colors.primary}, ${colors.secondary})` }}></div>
+            
+            {/* Ministry Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4">
+                <Shield className="w-12 h-12" style={{ color: colors.primary }} />
+                <div>
+                  <h2 className="text-lg font-semibold" style={{ color: colors.darkText }}>Ministry of Health</h2>
+                  <p className="text-sm" style={{ color: colors.mediumText }}>Sultanate of Oman</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-bold" style={{ color: colors.primary }}>2023 DATA ONLY</p>
+                <p className="text-sm" style={{ color: colors.mediumText }}>Annual Report - Year 2023</p>
+                <p className="text-xs" style={{ color: colors.lightText }}>Suhar Wilayat</p>
+              </div>
+            </div>
+            
+            <h1 className="text-3xl font-bold mb-2" style={{ color: colors.primary }}>
+              VTE Risk Assessment Analysis - Year 2023
+            </h1>
+            <p className="text-lg" style={{ color: colors.mediumText }}>
+              Comprehensive Age Distribution and Risk Factor Analysis by Health Center
+            </p>
+            <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: colors.primary + '20' }}>
+              <Calendar className="w-4 h-4" style={{ color: colors.primary }} />
+              <span className="text-sm font-semibold" style={{ color: colors.primary }}>
+                Data Period: January 1, 2023 - December 31, 2023
+              </span>
+            </div>
+            
+            {/* Summary Stats */}
+            <AnimatedList>
+              <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t">
+                <AnimatedListItem delay={0.1}>
+                  <div>
+                    <p className="text-sm" style={{ color: colors.mediumText }}>Total Patients (2023)</p>
+                    <p className="text-2xl font-bold" style={{ color: colors.primary }}>
+                      <AnimatedNumber value={grandTotals.totalPatients} />
+                    </p>
+                  </div>
+                </AnimatedListItem>
+                <AnimatedListItem delay={0.2}>
+                  <div>
+                    <p className="text-sm" style={{ color: colors.mediumText }}>Health Centers</p>
+                    <p className="text-2xl font-bold" style={{ color: colors.primary }}>6</p>
+                  </div>
+                </AnimatedListItem>
+                <AnimatedListItem delay={0.3}>
+                  <div>
+                    <p className="text-sm" style={{ color: colors.mediumText }}>Risk Factors Assessed</p>
+                    <p className="text-2xl font-bold" style={{ color: colors.primary }}>27</p>
+                  </div>
+                </AnimatedListItem>
+              </div>
+            </AnimatedList>
+          </div>
+        </AnimatedCard>
 
         {/* Professional View Mode Toggle */}
-        <div className="flex gap-4 mb-6">
-          {[
-            { mode: 'by-center', label: 'Analysis by Health Center (2023)', icon: <Building2 className="w-5 h-5" /> },
-            { mode: 'overview', label: 'Overall Summary (2023)', icon: <BarChart2 className="w-5 h-5" /> }
-          ].map((item, index) => (
-            <button
-              key={item.mode}
-              onClick={() => setViewMode(item.mode)}
-              className={`
-                px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2
-                ${viewMode === item.mode
-                  ? 'text-white shadow-lg transform scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 shadow hover:shadow-lg hover:scale-102'
-                }
-                animate-slideIn
-              `}
-              style={{ 
-                animationDelay: `${index * 100}ms`,
-                backgroundColor: viewMode === item.mode ? colors.primary : undefined,
-                color: viewMode === item.mode ? 'white' : colors.darkText
-              }}
-            >
-              {item.icon}
-              {item.label}
-            </button>
-          ))}
-        </div>
+        <AnimatedWrapper
+          delay={0.2}
+          animation={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, delay: 0.2 }
+            }
+          }}
+        >
+          <div className="flex gap-4 mb-6">
+            {[
+              { mode: 'by-center', label: 'Analysis by Health Center (2023)', icon: <Building2 className="w-5 h-5" /> },
+              { mode: 'overview', label: 'Overall Summary (2023)', icon: <BarChart2 className="w-5 h-5" /> }
+            ].map((item, index) => (
+              <button
+                key={item.mode}
+                onClick={() => setViewMode(item.mode)}
+                className={`
+                  px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2
+                  ${viewMode === item.mode
+                    ? 'text-white shadow-lg transform scale-105'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow hover:shadow-lg hover:scale-102'
+                  }
+                  animate-slideIn
+                `}
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  backgroundColor: viewMode === item.mode ? colors.primary : undefined,
+                  color: viewMode === item.mode ? 'white' : colors.darkText
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </AnimatedWrapper>
 
         {/* Health Center Analysis View */}
         {viewMode === 'by-center' && (
-          <div className="space-y-6">
-            {/* Health Center Selector */}
-            <Card className="border-0 shadow-lg animate-fadeIn">
-              <CardHeader style={{ backgroundColor: colors.lightBg }}>
-                <CardTitle className="text-xl flex items-center gap-2" style={{ color: colors.darkText }}>
-                  <Building2 className="w-6 h-6" style={{ color: colors.primary }} />
-                  Select Health Center - 2023 Data Analysis
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {healthCenters.map((center, index) => (
-                    <InteractiveCard
-                      key={center}
-                      onClick={() => {
-                        setSelectedHealthCenter(center);
-                        setCurrentRiskFactorIndex(0);
-                      }}
-                      isSelected={selectedHealthCenter === center}
-                      delay={index * 50}
-                    >
-                      <div className={`
-                        p-4 rounded-xl transition-all duration-300 border-2
-                        ${selectedHealthCenter === center
-                          ? 'text-white'
-                          : 'bg-white hover:shadow-lg'
-                        }
-                      `}
-                      style={{
-                        backgroundColor: selectedHealthCenter === center ? colors.primary : 'white',
-                        borderColor: selectedHealthCenter === center ? colors.primary : colors.mediumBg,
-                        color: selectedHealthCenter === center ? 'white' : colors.darkText
-                      }}>
-                        <Building2 className={`w-6 h-6 mb-2 ${selectedHealthCenter === center ? 'animate-pulse' : ''}`} 
-                          style={{ color: selectedHealthCenter === center ? 'white' : colors.primary }} />
-                        <div className="font-bold text-lg">{center}</div>
-                        <div className="text-sm mt-1 flex items-center gap-1">
-                          <Users className="w-4 h-4" />
-                          <AnimatedNumber 
-                            value={healthCenterData[center]?.total || 0} 
-                            className="font-semibold"
-                          />
-                          <span className="whitespace-nowrap"> patients (2023)</span>
-                        </div>
-                      </div>
-                    </InteractiveCard>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Selected Health Center Analysis */}
-            {currentHealthCenterData && (
-              <>
-                {/* Age Distribution */}
-                <Card className="border-0 shadow-lg animate-fadeIn">
-                  <CardHeader style={{ backgroundColor: colors.primary }} className="text-white">
-                    <CardTitle className="text-xl flex items-center gap-2">
-                      {selectedHealthCenter} - Age Distribution Analysis (2023 Data)
-                      <div className="ml-auto flex gap-2">
-                        {['bar', 'pie', 'area'].map((type) => (
-                          <button
-                            key={type}
-                            onClick={() => setChartView(type)}
-                            className={`
-                              p-2 rounded-lg transition-all duration-300
-                              ${chartView === type 
-                                ? 'bg-white/20 text-white' 
-                                : 'bg-transparent text-white/70 hover:bg-white/10'
+          <AnimatedWrapper
+            delay={0.3}
+            animation={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.6, delay: 0.3 }
+              }
+            }}
+          >
+            <div className="space-y-6">
+              {/* Health Center Selector */}
+              <Card className="border-0 shadow-lg animate-fadeIn">
+                <CardHeader style={{ backgroundColor: colors.lightBg }}>
+                  <CardTitle className="text-xl flex items-center gap-2" style={{ color: colors.darkText }}>
+                    <Building2 className="w-6 h-6" style={{ color: colors.primary }} />
+                    Select Health Center - 2023 Data Analysis
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <AnimatedList>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {healthCenters.map((center, index) => (
+                        <AnimatedListItem key={center} delay={index * 0.05}>
+                          <InteractiveCard
+                            onClick={() => {
+                              setSelectedHealthCenter(center);
+                              setCurrentRiskFactorIndex(0);
+                            }}
+                            isSelected={selectedHealthCenter === center}
+                            delay={index * 50}
+                          >
+                            <div className={`
+                              p-4 rounded-xl transition-all duration-300 border-2
+                              ${selectedHealthCenter === center
+                                ? 'text-white'
+                                : 'bg-white hover:shadow-lg'
                               }
                             `}
-                          >
-                            {type === 'bar' && <BarChart2 className="w-4 h-4" />}
-                            {type === 'pie' && <PieChart className="w-4 h-4" />}
-                            {type === 'area' && <Activity className="w-4 h-4" />}
-                          </button>
-                        ))}
-                      </div>
-                    </CardTitle>
-                    <CardDescription className="text-white/90">
-                      Total patients registered in 2023: <AnimatedNumber value={currentHealthCenterData.total} className="font-bold text-xl" />
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* Age Distribution Cards */}
-                      <div className="space-y-4">
-                        {Object.entries(currentHealthCenterData.ageDistribution).map(([age, count], index) => {
-                          const percentage = ((Number(count) / currentHealthCenterData.total) * 100).toFixed(1);
-                          const color = age === 'Below 18' ? colors.ageGroup1 : 
-                                       age === '18-34' ? colors.ageGroup2 : colors.ageGroup3;
-                          return (
-                            <div 
-                              key={age} 
-                              className="bg-white rounded-xl p-4 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-102 animate-slideIn border-2"
-                              style={{ 
-                                animationDelay: `${index * 100}ms`,
-                                borderColor: color + '30'
-                              }}
-                            >
-                              <div className="flex justify-between items-center mb-2">
-                                <span className="font-semibold flex items-center gap-2" style={{ color }}>
-                                  {age === 'Below 18' && <Baby className="w-5 h-5" />}
-                                  {age === '18-34' && <UserCheck className="w-5 h-5" />}
-                                  {age === '35 and above' && <UserPlus className="w-5 h-5" />}
-                                  {age} years
-                                </span>
-                                <span className="text-3xl font-bold" style={{ color: colors.darkText }}>
-                                  <AnimatedNumber value={Number(count)} />
-                                </span>
-                              </div>
-                              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                                <div 
-                                  className="h-3 rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
-                                  style={{ 
-                                    width: `${percentage}%`,
-                                    backgroundColor: color
-                                  }}
-                                >
-                                  <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
-                                </div>
-                              </div>
-                              <div className="flex justify-between items-center mt-2">
-                                <span className="text-sm" style={{ color: colors.mediumText }}>Percentage</span>
-                                <span className="text-sm font-semibold" style={{ color }}>{percentage}%</span>
+                            style={{
+                              backgroundColor: selectedHealthCenter === center ? colors.primary : 'white',
+                              borderColor: selectedHealthCenter === center ? colors.primary : colors.mediumBg,
+                              color: selectedHealthCenter === center ? 'white' : colors.darkText
+                            }}>
+                              <Building2 className={`w-6 h-6 mb-2 ${selectedHealthCenter === center ? 'animate-pulse' : ''}`} 
+                                style={{ color: selectedHealthCenter === center ? 'white' : colors.primary }} />
+                              <div className="font-bold text-lg">{center}</div>
+                              <div className="text-sm mt-1 flex items-center gap-1">
+                                <Users className="w-4 h-4" />
+                                <AnimatedNumber 
+                                  value={healthCenterData[center]?.total || 0} 
+                                  className="font-semibold"
+                                />
+                                <span className="whitespace-nowrap"> patients (2023)</span>
                               </div>
                             </div>
-                          );
-                        })}
-                      </div>
+                          </InteractiveCard>
+                        </AnimatedListItem>
+                      ))}
+                    </div>
+                  </AnimatedList>
+                </CardContent>
+              </Card>
 
-                      {/* Dynamic Chart View */}
-                      <div className="animate-fadeIn bg-white rounded-xl p-4">
-                        {chartView === 'pie' && (
-                          <ResponsiveContainer width="100%" height={250}>
-                            <ReChartsPieChart>
-                              <Pie
-                                data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
-                                  name: age,
-                                  value,
+              {/* Selected Health Center Analysis */}
+              {currentHealthCenterData && (
+                <div className="space-y-6">
+                  {/* Age Distribution */}
+                  <Card className="border-0 shadow-lg animate-fadeIn">
+                    <CardHeader style={{ backgroundColor: colors.primary }} className="text-white">
+                      <CardTitle className="text-xl flex items-center gap-2">
+                        {selectedHealthCenter} - Age Distribution Analysis (2023 Data)
+                        <div className="ml-auto flex gap-2">
+                          {['bar', 'pie', 'area'].map((type) => (
+                            <button
+                              key={type}
+                              onClick={() => setChartView(type)}
+                              className={`
+                                p-2 rounded-lg transition-all duration-300
+                                ${chartView === type 
+                                  ? 'bg-white/20 text-white' 
+                                  : 'bg-transparent text-white/70 hover:bg-white/10'
+                                }
+                              `}
+                            >
+                              {type === 'bar' && <BarChart2 className="w-4 h-4" />}
+                              {type === 'pie' && <PieChart className="w-4 h-4" />}
+                              {type === 'area' && <Activity className="w-4 h-4" />}
+                            </button>
+                          ))}
+                        </div>
+                      </CardTitle>
+                      <CardDescription className="text-white/90">
+                        Total patients registered in 2023: <AnimatedNumber value={currentHealthCenterData.total} className="font-bold text-xl" />
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Age Distribution Cards */}
+                        <AnimatedList>
+                          <div className="space-y-4">
+                            {Object.entries(currentHealthCenterData.ageDistribution).map(([age, count], index) => {
+                              const percentage = ((Number(count) / currentHealthCenterData.total) * 100).toFixed(1);
+                              const color = age === 'Below 18' ? colors.ageGroup1 : 
+                                           age === '18-34' ? colors.ageGroup2 : colors.ageGroup3;
+                              
+                              return (
+                                <AnimatedListItem key={age} delay={index * 0.1}>
+                                  <div className="p-4 rounded-lg border-2 transition-all duration-300 hover:shadow-lg" 
+                                       style={{ borderColor: color, backgroundColor: color + '10' }}>
+                                    <div className="flex items-center justify-between">
+                                      <div>
+                                        <h3 className="font-semibold text-lg" style={{ color: colors.darkText }}>{age}</h3>
+                                        <p className="text-sm" style={{ color: colors.mediumText }}>
+                                          <AnimatedNumber value={Number(count)} className="font-bold" /> patients
+                                        </p>
+                                      </div>
+                                      <div className="text-right">
+                                        <p className="text-2xl font-bold" style={{ color: color }}>{percentage}%</p>
+                                        <div className="w-16 h-2 rounded-full bg-gray-200 mt-1">
+                                          <div className="h-2 rounded-full transition-all duration-1000" 
+                                               style={{ width: `${percentage}%`, backgroundColor: color }}></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </AnimatedListItem>
+                              );
+                            })}
+                          </div>
+                        </AnimatedList>
+
+                        {/* Chart */}
+                        <AnimatedChart>
+                          <div className="h-64">
+                            <ResponsiveContainer width="100%" height="100%">
+                              {chartView === 'bar' && (
+                                <BarChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                  age: age.replace(' and above', '+'),
+                                  count: value,
                                   color: age === 'Below 18' ? colors.ageGroup1 : 
                                          age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
-                                }))}
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={60}
-                                outerRadius={90}
-                                fill="#8884d8"
-                                dataKey="value"
-                                animationBegin={0}
-                                animationDuration={1000}
-                                label={({ value }) => value}
-                              >
-                                {Object.entries(currentHealthCenterData.ageDistribution).map(([age, value], index) => (
-                                  <Cell key={`cell-${index}`} fill={
-                                    age === 'Below 18' ? colors.ageGroup1 : 
-                                    age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
-                                  } />
-                                ))}
-                              </Pie>
-                              <Tooltip />
-                              <Legend />
-                            </ReChartsPieChart>
-                          </ResponsiveContainer>
-                        )}
-                        
-                        {chartView === 'bar' && (
-                          <ResponsiveContainer width="100%" height={250}>
-                            <BarChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
-                              age: age.replace(' and above', '+'),
-                              value,
-                              color: age === 'Below 18' ? colors.ageGroup1 : 
-                                     age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
-                            }))}>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                              <XAxis dataKey="age" />
-                              <YAxis />
-                              <Tooltip />
-                              <Bar dataKey="value" radius={[8, 8, 0, 0]} animationDuration={1000}>
-                                <Cell fill={colors.ageGroup1} />
-                                <Cell fill={colors.ageGroup2} />
-                                <Cell fill={colors.ageGroup3} />
-                              </Bar>
-                            </BarChart>
-                          </ResponsiveContainer>
-                        )}
-                        
-                        {chartView === 'area' && (
-                          <ResponsiveContainer width="100%" height={250}>
-                            <AreaChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
-                              age: age.replace(' and above', '+'),
-                              value
-                            }))}>
-                              <defs>
-                                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor={colors.primary} stopOpacity={0.8}/>
-                                  <stop offset="95%" stopColor={colors.primary} stopOpacity={0.1}/>
-                                </linearGradient>
-                              </defs>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                              <XAxis dataKey="age" />
-                              <YAxis />
-                              <Tooltip />
-                              <Area 
-                                type="monotone" 
-                                dataKey="value" 
-                                stroke={colors.primary} 
-                                fillOpacity={1} 
-                                fill="url(#colorGradient)"
-                                animationDuration={1000}
-                              />
-                            </AreaChart>
-                          </ResponsiveContainer>
-                        )}
+                                }))}>
+                                  <CartesianGrid strokeDasharray="3 3" />
+                                  <XAxis dataKey="age" />
+                                  <YAxis />
+                                  <Tooltip content={<CustomTooltip />} />
+                                  <Bar dataKey="count" fill={colors.primary} />
+                                </BarChart>
+                              )}
+                              {chartView === 'pie' && (
+                                <ReChartsPieChart>
+                                  <Pie
+                                    data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                      name: age,
+                                      value,
+                                      color: age === 'Below 18' ? colors.ageGroup1 : 
+                                             age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
+                                    }))}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    label={({ name, value, color }) => `${name}: ${value}%`}
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                  >
+                                    {Object.entries(currentHealthCenterData.ageDistribution).map(([age, value], index) => (
+                                      <Cell key={`cell-${index}`} fill={
+                                        age === 'Below 18' ? colors.ageGroup1 : 
+                                        age === '18-34' ? colors.ageGroup2 : colors.ageGroup3
+                                      } />
+                                    ))}
+                                  </Pie>
+                                  <Tooltip content={<CustomTooltip />} />
+                                </ReChartsPieChart>
+                              )}
+                              {chartView === 'area' && (
+                                <AreaChart data={Object.entries(currentHealthCenterData.ageDistribution).map(([age, value]) => ({
+                                  age: age.replace(' and above', '+'),
+                                  value
+                                }))}>
+                                  <defs>
+                                    <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                                      <stop offset="5%" stopColor={colors.primary} stopOpacity={0.8}/>
+                                      <stop offset="95%" stopColor={colors.primary} stopOpacity={0.1}/>
+                                    </linearGradient>
+                                  </defs>
+                                  <CartesianGrid strokeDasharray="3 3" />
+                                  <XAxis dataKey="age" />
+                                  <YAxis />
+                                  <Tooltip content={<CustomTooltip />} />
+                                  <Area 
+                                    type="monotone" 
+                                    dataKey="value" 
+                                    stroke={colors.primary} 
+                                    fillOpacity={1} 
+                                    fill="url(#colorGradient)"
+                                  />
+                                </AreaChart>
+                              )}
+                            </ResponsiveContainer>
+                          </div>
+                        </AnimatedChart>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
 
-                {/* Footer with Official Stamp */}
-                <Card className="border-0 shadow-lg mt-8 animate-fadeIn">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5" style={{ color: colors.primary }} />
-                        <div>
-                          <p className="text-sm font-semibold" style={{ color: colors.darkText }}>
-                            VTE Risk Assessment Report - Year 2023 Data
-                          </p>
-                          <p className="text-xs" style={{ color: colors.mediumText }}>
-                            Report Generated: {new Date().toLocaleDateString()} | Data Year: 2023 Only
-                          </p>
+                  {/* Footer with Official Stamp */}
+                  <Card className="border-0 shadow-lg">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <FileText className="w-5 h-5" style={{ color: colors.primary }} />
+                          <div>
+                            <p className="text-sm font-semibold" style={{ color: colors.darkText }}>
+                              VTE Risk Assessment Report - Year 2023 Data
+                            </p>
+                            <p className="text-xs" style={{ color: colors.mediumText }}>
+                              Report Generated: {new Date().toLocaleDateString()} | Data Year: 2023 Only
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs" style={{ color: colors.primary }}>Document ID: VTE-2023-SUHAR</p>
+                          <p className="text-xs" style={{ color: colors.mediumText }}>Data Collection Period: Jan-Dec 2023</p>
+                          <p className="text-xs" style={{ color: colors.lightText }}>Ministry of Health - Sultanate of Oman</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-xs" style={{ color: colors.primary }}>Document ID: VTE-2023-SUHAR</p>
-                        <p className="text-xs" style={{ color: colors.mediumText }}>Data Collection Period: Jan-Dec 2023</p>
-                        <p className="text-xs" style={{ color: colors.lightText }}>Ministry of Health - Sultanate of Oman</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </>
-            )}
-          </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+            </div>
+          </AnimatedWrapper>
         )}
       </div>
     </div>
